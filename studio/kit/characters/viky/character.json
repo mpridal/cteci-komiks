@@ -1,0 +1,234 @@
+{
+  "id": "viky",
+  "name": "Viky",
+  "role": "hlavní hrdinka",
+  "viewBox": [
+    240,
+    400
+  ],
+  "traits": {
+    "věk": "asi 7 let, štíhlá",
+    "vlasy": "tmavě hnědé, rovné, po ramena, rovná ofina, prameny kolem obličeje",
+    "oči": "velké, tmavě hnědé, výrazné",
+    "pleť": "světle opálená, růžové tváře",
+    "úsměv": "velký, široký, rozzářený",
+    "doplňky": "drobné zlaté náušnice, ráda nosí kšiltovku (červenou nebo modrou)",
+    "oblečení": "volné krémové tričko, růžové kraťasy, bílé ponožky, růžové tenisky; na pláži růžové plavky",
+    "povaha": "zvídavá, veselá, ráda skáče a objevuje zvířata"
+  },
+  "requiredMarks": [
+    {
+      "id": "ofina",
+      "part": "hair_front",
+      "popis": "tmavé vlasy po ramena s rovnou ofinou"
+    },
+    {
+      "id": "oci",
+      "part": "eyes_*",
+      "popis": "velké hnědé oči"
+    },
+    {
+      "id": "nausnice",
+      "part": "hair_front",
+      "popis": "zlaté náušnice"
+    }
+  ],
+  "palette": {
+    "outline": "#2B2B2B",
+    "skin": "#EDBE98",
+    "cheek": "#F2A39C",
+    "hair": "#3A2820",
+    "iris": "#5A3420",
+    "pupil": "#1E1410",
+    "white": "#FFFFFF",
+    "mouth": "#A8424A",
+    "tongue": "#E57F86",
+    "earring": "#F2D16B",
+    "tshirt": "#F3EBD8",
+    "tshirt_print": "#C9A88A",
+    "shorts": "#F4A9C4",
+    "socks": "#FFFFFF",
+    "shoes": "#F6C8D8",
+    "swimsuit": "#F7B8DA",
+    "swim_flower": "#EE7FB0",
+    "cap_red": "#D93A33",
+    "cap_blue": "#2F4F9A"
+  },
+  "layerOrder": [
+    "hair_back",
+    "legs",
+    "torso",
+    "head",
+    "eyes",
+    "brows",
+    "mouth",
+    "hair_front",
+    "hat",
+    "arms"
+  ],
+  "expressions": {
+    "radost": {
+      "eyes": "open",
+      "brows": "normal",
+      "mouth": "smile"
+    },
+    "smich": {
+      "eyes": "laugh",
+      "brows": "raised",
+      "mouth": "grin"
+    },
+    "prekvapeni": {
+      "eyes": "wide",
+      "brows": "raised",
+      "mouth": "o"
+    },
+    "smutek": {
+      "eyes": "open",
+      "brows": "sad",
+      "mouth": "sad"
+    },
+    "premysleni": {
+      "eyes": "side",
+      "brows": "think",
+      "mouth": "small"
+    },
+    "strach": {
+      "eyes": "wide",
+      "brows": "sad",
+      "mouth": "open"
+    },
+    "mluvi": {
+      "eyes": "open",
+      "brows": "normal",
+      "mouth": "open"
+    },
+    "spi": {
+      "eyes": "closed",
+      "brows": "normal",
+      "mouth": "small"
+    }
+  },
+  "poses": {
+    "stat": {
+      "arms": "down",
+      "legs": "stand"
+    },
+    "jit": {
+      "arms": "walk",
+      "legs": "walk"
+    },
+    "sedet": {
+      "arms": "hold",
+      "legs": "sit"
+    },
+    "skakat": {
+      "arms": "up",
+      "legs": "jump"
+    },
+    "ukazovat": {
+      "arms": "point",
+      "legs": "stand"
+    },
+    "mavat": {
+      "arms": "wave",
+      "legs": "stand"
+    },
+    "drzet": {
+      "arms": "hold",
+      "legs": "stand"
+    }
+  },
+  "outfits": {
+    "vychozi": {
+      "torso": "tshirt",
+      "sleeve": "tshirt",
+      "footwear": "sneakers"
+    },
+    "plavky": {
+      "torso": "swimsuit",
+      "sleeve": "none",
+      "footwear": "barefoot"
+    }
+  },
+  "accessories": {
+    "cepice_cervena": {
+      "slot": "hat",
+      "part": "hat_cap_red"
+    },
+    "cepice_modra": {
+      "slot": "hat",
+      "part": "hat_cap_blue"
+    }
+  },
+  "anchors": {
+    "head": [
+      120,
+      100
+    ],
+    "mouth": [
+      120,
+      142
+    ],
+    "hands": [
+      120,
+      246
+    ],
+    "feet": [
+      120,
+      390
+    ],
+    "handRight": [
+      172,
+      280
+    ],
+    "handLeft": [
+      68,
+      280
+    ]
+  },
+  "headRadius": 84,
+  "parts": [
+    "arms_down__none",
+    "arms_down__tshirt",
+    "arms_hold__none",
+    "arms_hold__tshirt",
+    "arms_point__none",
+    "arms_point__tshirt",
+    "arms_up__none",
+    "arms_up__tshirt",
+    "arms_walk__none",
+    "arms_walk__tshirt",
+    "arms_wave__none",
+    "arms_wave__tshirt",
+    "brows_normal",
+    "brows_raised",
+    "brows_sad",
+    "brows_think",
+    "eyes_closed",
+    "eyes_laugh",
+    "eyes_open",
+    "eyes_side",
+    "eyes_wide",
+    "hair_back",
+    "hair_front",
+    "hat_cap_blue",
+    "hat_cap_red",
+    "head",
+    "legs_jump__barefoot",
+    "legs_jump__sneakers",
+    "legs_sit__barefoot",
+    "legs_sit__sneakers",
+    "legs_stand__barefoot",
+    "legs_stand__sneakers",
+    "legs_walk__barefoot",
+    "legs_walk__sneakers",
+    "mouth_grin",
+    "mouth_o",
+    "mouth_open",
+    "mouth_sad",
+    "mouth_small",
+    "mouth_smile",
+    "torso_swimsuit",
+    "torso_tshirt"
+  ]
+}

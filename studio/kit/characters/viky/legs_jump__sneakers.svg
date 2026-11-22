@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 400" width="240" height="400">
+<g id="legs_jump__sneakers">
+<polyline points="102,300 90,330 106,352" fill="none" stroke="#2B2B2B" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="102,300 90,330 106,352" fill="none" stroke="#EDBE98" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="96.2,338.5 106,352" fill="none" stroke="#FFFFFF" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M88.19876543485468 338.5233024729252 L104.19876543485468 338.5233024729252" fill="none" stroke="#2B2B2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="106" cy="360" rx="10" ry="13" fill="#F6C8D8" stroke="#2B2B2B" stroke-width="2.5"/>
+<polyline points="138,300 150,330 134,352" fill="none" stroke="#2B2B2B" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="138,300 150,330 134,352" fill="none" stroke="#EDBE98" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="143.8,338.5 134,352" fill="none" stroke="#FFFFFF" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M135.8012345651453 338.5233024729252 L151.8012345651453 338.5233024729252" fill="none" stroke="#2B2B2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="134" cy="360" rx="10" ry="13" fill="#F6C8D8" stroke="#2B2B2B" stroke-width="2.5"/>
+</g>
+</svg>

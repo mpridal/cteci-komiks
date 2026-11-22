@@ -1,5 +1,7 @@
-# Studio: Python 3.12
+# Studio: Python 3.12, virtuální prostředí studio/.venv
+#   python -m venv studio/.venv
+#   studio/.venv/Scripts/python -m pip install -r studio/requirements.txt
 # check_text.py používá jen standardní knihovnu.
+resvg-py>=0.2      # SVG -> PNG (karty postav, náhledy); bez systémových knihoven, na rozdíl od cairosvg
 jsonschema>=4.21
-cairosvg>=2.7
 pydub>=0.25

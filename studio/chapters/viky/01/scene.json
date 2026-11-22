@@ -1,0 +1,66 @@
+{
+  "seriesId": "viky",
+  "chapter": 1,
+  "title": "VIKY A MOŘE",
+  "keywords": [],
+  "pages": [
+    {
+      "music": null,
+      "panels": [
+        {
+          "id": "p1",
+          "background": "beach",
+          "shot": "celek",
+          "characters": [
+            { "id": "viky", "x": 0.36, "y": 0.97, "height": 0.8, "pose": "mavat", "expression": "radost", "outfit": "plavky" }
+          ],
+          "texts": [
+            { "id": "t1", "kind": "narration", "text": "JE TEPLO. VIKY JDE K MOŘI." },
+            { "id": "t2", "kind": "bubble", "speaker": "viky", "text": "HURÁ! TO JE VODA!", "anchor": [0.7, 0.15] }
+          ],
+          "cues": [
+            { "text": "t2", "word": "HURÁ!", "type": "anim", "layer": "viky", "action": "jump" }
+          ]
+        },
+        {
+          "id": "p2",
+          "background": "sea",
+          "shot": "polocelek",
+          "characters": [
+            { "id": "viky", "x": 0.45, "y": 0.93, "height": 0.76, "pose": "skakat", "expression": "smich", "outfit": "plavky" }
+          ],
+          "props": [
+            { "id": "splash", "prop": "splash", "x": 0.45, "y": 0.95, "width": 0.3, "layer": "animated" }
+          ],
+          "texts": [
+            { "id": "t1", "kind": "narration", "text": "VIKY SKÁČE DO VODY." },
+            { "id": "t2", "kind": "bubble", "speaker": "viky", "text": "HOP! JÉ, TO STŘÍKÁ!", "anchor": [0.76, 0.16] }
+          ],
+          "cues": [
+            { "text": "t2", "word": "HOP!", "type": "anim", "layer": "viky", "action": "jump" },
+            { "text": "t2", "word": "STŘÍKÁ!", "type": "anim", "layer": "splash", "action": "shake" }
+          ]
+        },
+        {
+          "id": "p3",
+          "background": "beach",
+          "shot": "celek",
+          "characters": [
+            { "id": "viky", "x": 0.4, "y": 0.97, "height": 0.8, "pose": "drzet", "expression": "prekvapeni", "outfit": "plavky" }
+          ],
+          "props": [
+            { "id": "shell", "prop": "shell", "at": "viky.hands", "dy": -0.01, "width": 0.11, "layer": "animated" }
+          ],
+          "texts": [
+            { "id": "t1", "kind": "narration", "text": "NA PÍSKU JE MUŠLE." },
+            { "id": "t2", "kind": "bubble", "speaker": "viky", "text": "MÁMO, MÁM MUŠLI! CO V NÍ ŠUMÍ?", "anchor": [0.72, 0.17] }
+          ],
+          "cues": [
+            { "text": "t2", "word": "MUŠLI!", "type": "anim", "layer": "shell", "action": "bounce" },
+            { "text": "t2", "word": "ŠUMÍ?", "type": "anim", "layer": "shell", "action": "shake" }
+          ]
+        }
+      ]
+    }
+  ]
+}

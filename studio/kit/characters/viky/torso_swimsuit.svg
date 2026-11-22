@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 400" width="240" height="400">
+<g id="torso_swimsuit">
+<path d="M110 150 L110 182 L130 182 L130 150 Z" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M96 172 Q120 182 144 172 L160 182 Q166 190 162 214 L78 214 Q74 190 80 182 Z" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M94 182 L100 182 L104 206 L136 206 L140 182 L146 182 L156 212 Q162 256 160 298 L134 312 L120 318 L106 312 L80 298 Q78 256 84 212 Z" fill="#F7B8DA" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M80 298 Q92 312 106 312 L104 318 Q90 318 76 304 Z" fill="#F7B8DA" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M160 298 Q148 312 134 312 L136 318 Q150 318 164 304 Z" fill="#F7B8DA" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<ellipse cx="100" cy="228" rx="5" ry="5" fill="#EE7FB0" stroke="none"/>
+<ellipse cx="138" cy="246" rx="5" ry="5" fill="#EE7FB0" stroke="none"/>
+<ellipse cx="112" cy="272" rx="5" ry="5" fill="#EE7FB0" stroke="none"/>
+<ellipse cx="146" cy="284" rx="5" ry="5" fill="#EE7FB0" stroke="none"/>
+</g>
+</svg>

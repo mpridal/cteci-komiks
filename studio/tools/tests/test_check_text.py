@@ -54,6 +54,14 @@ class SyllabifyTest(unittest.TestCase):
     def test_vowelless(self):
         self.assertEqual(ct.syllabify("VLK"), ["VLK"])
 
+    def test_syllabic_r_l(self):
+        self.assertEqual(ct.syllabify("DRŽÍ"), ["DR", "ŽÍ"])
+        self.assertEqual(ct.syllabify("KRTEK"), ["KR", "TEK"])
+        self.assertEqual(ct.syllabify("VLNA"), ["VL", "NA"])
+        self.assertEqual(ct.syllabify("BRATR"), ["BRA", "TR"])
+        self.assertEqual(ct.syllabify("CHLÉB"), ["CHLÉB"])
+        self.assertEqual(ct.practice_categories("DRŽÍ", ["DR", "ŽÍ"], P), ["no-vowel"])
+
 
 class CategoriesTest(unittest.TestCase):
     def cats(self, word, p=P):

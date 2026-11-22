@@ -1,0 +1,23 @@
+{
+  "series": null,
+  "style": {
+    "outline": { "color": "#2B2B2B", "width": 2.5 },
+    "panelAspect": "4:3",
+    "bubbleZoneTop": 0.25,
+    "proportions": "dětské, hlava zhruba třetina výšky těla"
+  },
+  "characters": [
+    {
+      "id": "viky",
+      "name": "Viky",
+      "role": "hlavní hrdinka",
+      "appearance": "asi 7 let, tmavě hnědé rovné vlasy po ramena s rovnou ofinou, velké hnědé oči, světle opálená pleť, růžové tváře, zlaté náušnice; volné krémové tričko, růžové kraťasy, růžové tenisky, často kšiltovka (červená nebo modrá)",
+      "personality": "zvídavá, veselá, ráda skáče a objevuje zvířata",
+      "speech": "krátké nadšené věty, ráda se ptá",
+      "kit": "studio/kit/characters/viky",
+      "approved": true
+    }
+  ],
+  "places": [],
+  "chapters": []
+}

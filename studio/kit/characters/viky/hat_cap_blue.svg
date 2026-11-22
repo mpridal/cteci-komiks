@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 400" width="240" height="400">
+<g id="hat_cap_blue">
+<path d="M62 58 Q62 12 120 10 Q178 12 178 58 Z" fill="#2F4F9A" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M120 11 L120 56" fill="none" stroke="#2B2B2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M92 18 Q84 34 84 56" fill="none" stroke="#2B2B2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M148 18 Q156 34 156 56" fill="none" stroke="#2B2B2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="120" cy="10" rx="5" ry="3.5" fill="#2F4F9A" stroke="#2B2B2B" stroke-width="2.5"/>
+<ellipse cx="134" cy="36" rx="9" ry="9" fill="#FFFFFF" stroke="none"/>
+<path d="M58 56 Q120 70 182 56 Q188 62 181 67 Q120 82 59 67 Q52 62 58 56 Z" fill="#2F4F9A" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+</g>
+</svg>

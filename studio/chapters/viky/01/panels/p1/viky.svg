@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 400" width="240" height="400">
+<g data-character="viky">
+<g id="hair_back">
+<path d="M120 28 C58 28 46 80 48 140 C49 168 54 188 62 200 Q72 206 82 200 Q92 207 104 201 Q116 207 128 201 Q140 207 152 201 Q164 207 176 200 C186 188 191 168 192 140 C194 80 182 28 120 28 Z" fill="#3A2820" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+</g>
+<g id="legs_stand__barefoot">
+<polyline points="102,300 101,344 100,372" fill="none" stroke="#2B2B2B" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="102,300 101,344 100,372" fill="none" stroke="#EDBE98" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="105" cy="380" rx="13" ry="8" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+<polyline points="138,300 139,344 140,372" fill="none" stroke="#2B2B2B" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="138,300 139,344 140,372" fill="none" stroke="#EDBE98" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="135" cy="380" rx="13" ry="8" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+</g>
+<g id="torso_swimsuit">
+<path d="M110 150 L110 182 L130 182 L130 150 Z" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M96 172 Q120 182 144 172 L160 182 Q166 190 162 214 L78 214 Q74 190 80 182 Z" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M94 182 L100 182 L104 206 L136 206 L140 182 L146 182 L156 212 Q162 256 160 298 L134 312 L120 318 L106 312 L80 298 Q78 256 84 212 Z" fill="#F7B8DA" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M80 298 Q92 312 106 312 L104 318 Q90 318 76 304 Z" fill="#F7B8DA" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M160 298 Q148 312 134 312 L136 318 Q150 318 164 304 Z" fill="#F7B8DA" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<ellipse cx="100" cy="228" rx="5" ry="5" fill="#EE7FB0" stroke="none"/>
+<ellipse cx="138" cy="246" rx="5" ry="5" fill="#EE7FB0" stroke="none"/>
+<ellipse cx="112" cy="272" rx="5" ry="5" fill="#EE7FB0" stroke="none"/>
+<ellipse cx="146" cy="284" rx="5" ry="5" fill="#EE7FB0" stroke="none"/>
+</g>
+<g id="head">
+<path d="M120 40 C152 40 176 62 176 100 C176 136 154 162 120 162 C86 162 64 136 64 100 C64 62 88 40 120 40 Z" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<ellipse cx="86" cy="132" rx="9" ry="6" fill="#F2A39C" stroke="none"/>
+<ellipse cx="154" cy="132" rx="9" ry="6" fill="#F2A39C" stroke="none"/>
+<path d="M117 123 Q121 128 125 123" fill="none" stroke="#2B2B2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="eyes_open">
+<ellipse cx="98" cy="110" rx="11" ry="13" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="2.5"/>
+<ellipse cx="98" cy="112" rx="8" ry="8" fill="#5A3420" stroke="none"/>
+<ellipse cx="98" cy="112" rx="4.4" ry="4.4" fill="#1E1410" stroke="none"/>
+<ellipse cx="101" cy="108" rx="2.6" ry="2.6" fill="#FFFFFF" stroke="none"/>
+<path d="M88 102 L83 98" fill="none" stroke="#2B2B2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="142" cy="110" rx="11" ry="13" fill="#FFFFFF" stroke="#2B2B2B" stroke-width="2.5"/>
+<ellipse cx="142" cy="112" rx="8" ry="8" fill="#5A3420" stroke="none"/>
+<ellipse cx="142" cy="112" rx="4.4" ry="4.4" fill="#1E1410" stroke="none"/>
+<ellipse cx="145" cy="108" rx="2.6" ry="2.6" fill="#FFFFFF" stroke="none"/>
+<path d="M152 102 L157 98" fill="none" stroke="#2B2B2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="brows_normal">
+<path d="M88 94 Q98 89 108 93" fill="none" stroke="#3A2820" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M132 93 Q142 89 152 94" fill="none" stroke="#3A2820" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="mouth_smile">
+<path d="M108 139 Q120 150 132 139" fill="none" stroke="#2B2B2B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="hair_front">
+<path d="M58 182 C48 150 44 110 50 74 C56 42 84 24 120 24 C156 24 184 42 190 74 C196 110 192 150 182 182 Q176 178 172 172 C174 140 175 112 170 86 L162 82 L156 77 L148 83 L140 77 L132 83 L124 77 L116 83 L108 77 L100 83 L92 77 L84 83 L76 80 L70 86 C65 112 66 140 68 172 Q64 178 58 182 Z" fill="#3A2820" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M150 40 Q160 50 164 64" fill="none" stroke="#5A4034" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="66" cy="112" rx="8" ry="12" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+<ellipse cx="174" cy="112" rx="8" ry="12" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+<ellipse cx="65" cy="127" rx="3.4" ry="3.4" fill="#F2D16B" stroke="#2B2B2B" stroke-width="2.5"/>
+<ellipse cx="175" cy="127" rx="3.4" ry="3.4" fill="#F2D16B" stroke="#2B2B2B" stroke-width="2.5"/>
+</g>
+<g id="arms_wave__none">
+<polyline points="82,186 70,236 68,280" fill="none" stroke="#2B2B2B" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="82,186 70,236 68,280" fill="none" stroke="#EDBE98" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="68" cy="280" rx="9.5" ry="9.5" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+<polyline points="158,186 192,170 198,126" fill="none" stroke="#2B2B2B" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="158,186 192,170 198,126" fill="none" stroke="#EDBE98" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="198" cy="126" rx="9.5" ry="9.5" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+</g>
+</g>
+</svg>

@@ -1,0 +1,447 @@
+{
+  "formatVersion": 1,
+  "seriesId": "viky",
+  "chapter": 1,
+  "title": "VIKY A MOŘE",
+  "readerLevel": {
+    "fontStage": "UPPER"
+  },
+  "cover": "panels/cover.webp",
+  "audio": [],
+  "pages": [
+    {
+      "panels": [
+        {
+          "id": "p1",
+          "image": {
+            "type": "svg-layers",
+            "aspect": "4:3",
+            "layers": [
+              {
+                "id": "bg",
+                "file": "panels/p1/bg.svg"
+              },
+              {
+                "id": "viky",
+                "file": "panels/p1/viky.svg",
+                "box": [
+                  0.18,
+                  0.17,
+                  0.54,
+                  0.97
+                ]
+              }
+            ]
+          },
+          "texts": [
+            {
+              "id": "t1",
+              "kind": "narration",
+              "anchor": [
+                0.25,
+                0.08
+              ],
+              "words": [
+                {
+                  "w": "JE",
+                  "syl": [
+                    "JE"
+                  ]
+                },
+                {
+                  "w": "TEPLO.",
+                  "syl": [
+                    "TE",
+                    "PLO"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ]
+                },
+                {
+                  "w": "VIKY",
+                  "syl": [
+                    "VI",
+                    "KY"
+                  ]
+                },
+                {
+                  "w": "JDE",
+                  "syl": [
+                    "JDE"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ]
+                },
+                {
+                  "w": "K",
+                  "syl": [
+                    "K"
+                  ],
+                  "practice": [
+                    "no-vowel"
+                  ]
+                },
+                {
+                  "w": "MOŘI.",
+                  "syl": [
+                    "MO",
+                    "ŘI"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "t2",
+              "kind": "bubble",
+              "speaker": "viky",
+              "anchor": [
+                0.7,
+                0.15
+              ],
+              "words": [
+                {
+                  "w": "HURÁ!",
+                  "syl": [
+                    "HU",
+                    "RÁ"
+                  ],
+                  "cues": [
+                    "p1c1"
+                  ]
+                },
+                {
+                  "w": "TO",
+                  "syl": [
+                    "TO"
+                  ]
+                },
+                {
+                  "w": "JE",
+                  "syl": [
+                    "JE"
+                  ]
+                },
+                {
+                  "w": "VODA!",
+                  "syl": [
+                    "VO",
+                    "DA"
+                  ]
+                }
+              ]
+            }
+          ],
+          "cues": [
+            {
+              "id": "p1c1",
+              "type": "anim",
+              "layer": "viky",
+              "action": "jump"
+            }
+          ]
+        },
+        {
+          "id": "p2",
+          "image": {
+            "type": "svg-layers",
+            "aspect": "4:3",
+            "layers": [
+              {
+                "id": "bg",
+                "file": "panels/p2/bg.svg"
+              },
+              {
+                "id": "viky",
+                "file": "panels/p2/viky.svg",
+                "box": [
+                  0.279,
+                  0.17,
+                  0.621,
+                  0.93
+                ]
+              },
+              {
+                "id": "splash",
+                "file": "panels/p2/splash.svg",
+                "box": [
+                  0.3,
+                  0.858,
+                  0.6,
+                  1.042
+                ]
+              }
+            ]
+          },
+          "texts": [
+            {
+              "id": "t1",
+              "kind": "narration",
+              "anchor": [
+                0.25,
+                0.08
+              ],
+              "words": [
+                {
+                  "w": "VIKY",
+                  "syl": [
+                    "VI",
+                    "KY"
+                  ]
+                },
+                {
+                  "w": "SKÁČE",
+                  "syl": [
+                    "SKÁ",
+                    "ČE"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ]
+                },
+                {
+                  "w": "DO",
+                  "syl": [
+                    "DO"
+                  ]
+                },
+                {
+                  "w": "VODY.",
+                  "syl": [
+                    "VO",
+                    "DY"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "t2",
+              "kind": "bubble",
+              "speaker": "viky",
+              "anchor": [
+                0.76,
+                0.16
+              ],
+              "words": [
+                {
+                  "w": "HOP!",
+                  "syl": [
+                    "HOP"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ],
+                  "cues": [
+                    "p2c1"
+                  ]
+                },
+                {
+                  "w": "JÉ,",
+                  "syl": [
+                    "JÉ"
+                  ]
+                },
+                {
+                  "w": "TO",
+                  "syl": [
+                    "TO"
+                  ]
+                },
+                {
+                  "w": "STŘÍKÁ!",
+                  "syl": [
+                    "STŘÍ",
+                    "KÁ"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ],
+                  "cues": [
+                    "p2c2"
+                  ]
+                }
+              ]
+            }
+          ],
+          "cues": [
+            {
+              "id": "p2c1",
+              "type": "anim",
+              "layer": "viky",
+              "action": "jump"
+            },
+            {
+              "id": "p2c2",
+              "type": "anim",
+              "layer": "splash",
+              "action": "shake"
+            }
+          ]
+        },
+        {
+          "id": "p3",
+          "image": {
+            "type": "svg-layers",
+            "aspect": "4:3",
+            "layers": [
+              {
+                "id": "bg",
+                "file": "panels/p3/bg.svg"
+              },
+              {
+                "id": "viky",
+                "file": "panels/p3/viky.svg",
+                "box": [
+                  0.22,
+                  0.17,
+                  0.58,
+                  0.97
+                ]
+              },
+              {
+                "id": "shell",
+                "file": "panels/p3/shell.svg",
+                "box": [
+                  0.345,
+                  0.59,
+                  0.455,
+                  0.714
+                ]
+              }
+            ]
+          },
+          "texts": [
+            {
+              "id": "t1",
+              "kind": "narration",
+              "anchor": [
+                0.25,
+                0.08
+              ],
+              "words": [
+                {
+                  "w": "NA",
+                  "syl": [
+                    "NA"
+                  ]
+                },
+                {
+                  "w": "PÍSKU",
+                  "syl": [
+                    "PÍ",
+                    "SKU"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ]
+                },
+                {
+                  "w": "JE",
+                  "syl": [
+                    "JE"
+                  ]
+                },
+                {
+                  "w": "MUŠLE.",
+                  "syl": [
+                    "MU",
+                    "ŠLE"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "t2",
+              "kind": "bubble",
+              "speaker": "viky",
+              "anchor": [
+                0.72,
+                0.17
+              ],
+              "words": [
+                {
+                  "w": "MÁMO,",
+                  "syl": [
+                    "MÁ",
+                    "MO"
+                  ]
+                },
+                {
+                  "w": "MÁM",
+                  "syl": [
+                    "MÁM"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ]
+                },
+                {
+                  "w": "MUŠLI!",
+                  "syl": [
+                    "MU",
+                    "ŠLI"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ],
+                  "cues": [
+                    "p3c1"
+                  ]
+                },
+                {
+                  "w": "CO",
+                  "syl": [
+                    "CO"
+                  ]
+                },
+                {
+                  "w": "V",
+                  "syl": [
+                    "V"
+                  ],
+                  "practice": [
+                    "no-vowel"
+                  ]
+                },
+                {
+                  "w": "NÍ",
+                  "syl": [
+                    "NÍ"
+                  ]
+                },
+                {
+                  "w": "ŠUMÍ?",
+                  "syl": [
+                    "ŠU",
+                    "MÍ"
+                  ],
+                  "cues": [
+                    "p3c2"
+                  ]
+                }
+              ]
+            }
+          ],
+          "cues": [
+            {
+              "id": "p3c1",
+              "type": "anim",
+              "layer": "shell",
+              "action": "bounce"
+            },
+            {
+              "id": "p3c2",
+              "type": "anim",
+              "layer": "shell",
+              "action": "shake"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

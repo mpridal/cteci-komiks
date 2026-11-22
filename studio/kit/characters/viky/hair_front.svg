@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 400" width="240" height="400">
+<g id="hair_front">
+<path d="M58 182 C48 150 44 110 50 74 C56 42 84 24 120 24 C156 24 184 42 190 74 C196 110 192 150 182 182 Q176 178 172 172 C174 140 175 112 170 86 L162 82 L156 77 L148 83 L140 77 L132 83 L124 77 L116 83 L108 77 L100 83 L92 77 L84 83 L76 80 L70 86 C65 112 66 140 68 172 Q64 178 58 182 Z" fill="#3A2820" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M150 40 Q160 50 164 64" fill="none" stroke="#5A4034" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="66" cy="112" rx="8" ry="12" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+<ellipse cx="174" cy="112" rx="8" ry="12" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+<ellipse cx="65" cy="127" rx="3.4" ry="3.4" fill="#F2D16B" stroke="#2B2B2B" stroke-width="2.5"/>
+<ellipse cx="175" cy="127" rx="3.4" ry="3.4" fill="#F2D16B" stroke="#2B2B2B" stroke-width="2.5"/>
+</g>
+</svg>

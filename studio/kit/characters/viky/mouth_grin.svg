@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 400" width="240" height="400">
+<g id="mouth_grin">
+<path d="M103 136 Q120 162 137 136 Q120 141 103 136 Z" fill="#A8424A" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M106 137.5 Q120 142 134 137.5 L132 142 Q120 146 108 142 Z" fill="#FFFFFF" stroke="none"/>
+<ellipse cx="120" cy="151" rx="7" ry="3.5" fill="#E57F86" stroke="none"/>
+<path d="M103 136 Q120 162 137 136 Q120 141 103 136 Z" fill="none" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+</g>
+</svg>

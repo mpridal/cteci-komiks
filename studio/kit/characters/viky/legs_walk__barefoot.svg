@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 400" width="240" height="400">
+<g id="legs_walk__barefoot">
+<polyline points="102,300 92,342 84,372" fill="none" stroke="#2B2B2B" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="102,300 92,342 84,372" fill="none" stroke="#EDBE98" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="89" cy="380" rx="13" ry="8" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+<polyline points="138,300 147,340 154,368" fill="none" stroke="#2B2B2B" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="138,300 147,340 154,368" fill="none" stroke="#EDBE98" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="149" cy="376" rx="13" ry="8" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+</g>
+</svg>

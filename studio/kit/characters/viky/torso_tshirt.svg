@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 400" width="240" height="400">
+<g id="torso_tshirt">
+<path d="M110 150 L110 182 L130 182 L130 150 Z" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M82 282 L158 282 L161 320 L125 320 L120 306 L115 320 L79 320 Z" fill="#F4A9C4" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M98 172 Q120 186 142 172 L162 180 Q168 186 166 200 L168 292 Q120 300 72 292 L74 200 Q72 186 78 180 Z" fill="#F3EBD8" stroke="#2B2B2B" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M100 174 Q120 188 140 174" fill="none" stroke="#2B2B2B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="104" cy="238" rx="9" ry="9" fill="#C9A88A" stroke="none"/>
+<ellipse cx="97" cy="229" rx="4" ry="4" fill="#C9A88A" stroke="none"/>
+<ellipse cx="111" cy="229" rx="4" ry="4" fill="#C9A88A" stroke="none"/>
+</g>
+</svg>

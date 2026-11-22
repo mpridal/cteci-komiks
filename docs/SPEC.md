@@ -207,12 +207,21 @@ Výrazy jsou kombinace očí, obočí a úst: radost, překvapení, smutek, pře
 
 **Scéna panelu** (`scene.json`): pozadí, záběr (celek, polocelek, detail = měřítko), postavy (`id`, pozice, měřítko, póza, výraz, směr), rekvizity (pozice, měřítko, natočení) a efekty (čáry pohybu, jiskry). Skript `tools/compose.py` z ní vytvoří vrstvy panelu: pozadí včetně statických rekvizit a jednu SVG vrstvu na každou postavu nebo animovanou rekvizitu.
 
+Implementace (prototyp B, 22. 11. 2026):
+
+- Díly postavy generuje `kit/characters/<id>/build.py`, pozadí a rekvizity `kit/build_scenery.py`. SVG se needitují ručně, aby zůstaly konzistentní.
+- Přesný formát `scene.json` je popsaný v nápovědě `tools/compose.py`. Rekvizitu lze posadit na kotvu postavy (`"at": "viky.hands"`), statickou rekvizitu dát před postavu (`"layer": "front"` → vrstva `fg`).
+- `compose.py` po složení rovnou zkontroluje text jako `check_text.py`. `render_previews.py` vytvoří PNG stránek a obálku `panels/cover.webp`.
+- Zatím jen pohled zepředu (zrcadlení přes `flip`), pohled ze tří čtvrtin přijde po bráně.
+
 Styl série:
 
 - ploché barvy bez přechodů, obrys 2,5 px tmavě šedý (#2B2B2B), oblé tvary,
 - dětské proporce postav (hlava zhruba třetina výšky těla),
 - panel 4:3, horních ~25 % plochy bez důležité kresby (místo pro bubliny),
 - barvy jen z palety série.
+
+Kontinuita: doplňky postavy (kšiltovka a další) se během jedné kapitoly nemění. Kontroluje to `compose.py` jako chybu. Oblečení se měnit smí, když to vyžaduje děj (převlékne se do plavek).
 
 Kontroly (`tools/check_kit.py`): panely používají jen díly ze sady a rekvizity z `kit/props/`, barvy jsou jen z palety, poznávací znaky jsou přítomné a SVG neobsahuje text, skripty ani externí odkazy.
 
@@ -234,7 +243,8 @@ Tablet ukazuje celou stránku komiksu, telefon jeden panel po druhém. Text vžd
 
 - **Tablet** (šířka ≥ 600 dp): stránka se 2–3 panely na výšku i na šířku. Panel, který se právě čte, je zvýrazněný, ostatní ztlumené.
 - **Telefon:** režim panel po panelu na výšku, posun swipem nebo automaticky po dočtení panelu.
-- **Bubliny:** bílé, kreslené aplikací nad obrázkem podle `anchor`, ocas míří k vrstvě mluvčího. Vyprávění v obdélníku u horního okraje.
+- **Bubliny:** bílé, kreslené aplikací nad obrázkem podle `anchor`, ocas míří k hlavě mluvčího. Vyprávění v obdélníku u horního okraje.
+- **Bubliny nikdy nezasahují do hlavy:** ani bublina, ani její ocas nesmí překrýt hlavu, obličej nebo oči postavy. Ocas končí kousek před hlavou: mezera 14 px panelu od kruhu `headRadius` kolem kotvy `head` z `character.json`. Bublina mluvčího má ocas vždy (nikdy se nevynechá), dlouhý aspoň 32 px panelu. Když bublina hlavu překrývá nebo na ocas nezbývá místo, posune se: nejdřív stranou od hlavy, pak nahoru, pak na druhou stranu. Stejné pravidlo platí v `render_previews.py` i v Čtečce.
 - **Písmo podle `fontStage`:** velká tiskací, malá tiskací, nebo psací. Pro tiskací písmo Andika (SIL, licence OFL, navrženo pro učení čtení), psací viz otevřené otázky. Velikost na tabletu 36 sp, na telefonu 28 sp, rodič ji může změnit.
 - **Slabiky:** volitelnou nápovědou je střídavé podbarvení slabik dvěma jemnými barvami.
 - **Čtecí okénko:** aktuální slovo má žluté podbarvení, přečtená slova jsou ztlumená, následující slovo nic nemá.
@@ -307,7 +317,7 @@ Zásady:
 - Aplikace obsahuje ukázkovou kapitolu pro první spuštění bez internetu a pro testy.
 - Aktualizace aplikace i kapitol jako u ostatních projektů: GitHub Releases. Pokud již existuje sdílený modul pro aktualizace z GitHubu (Deskovky, ThermoCamera), převzít ho.
 - Testy: unit testy sledování na nahraných přepisech (fixtures z prototypu A), validace JSON Schema ve Studiu i v Čtečce, instrumentační test vykreslení ukázkové kapitoly.
-- Studio: Python 3.12, `cairosvg` pro PNG náhledy, `jsonschema`, `pydub` + ffmpeg pro zvuky. Každý skript má `--help` a vrací nenulový kód při chybě.
+- Studio: Python 3.12 ve `studio/.venv`, `resvg-py` pro PNG náhledy (cairosvg na Windows potřebuje systémovou knihovnu cairo), `jsonschema`, `pydub` + ffmpeg pro zvuky. Každý skript má `--help` a vrací nenulový kód při chybě.
 
 ## Soukromí a bezpečnost
 
@@ -335,6 +345,7 @@ Stavba začíná dvěma malými prototypy, které ověří nejrizikovější př
     - `/nova-postava` z 2–3 fotek
     - 6 panelů ve 2 kapitolách, PNG náhledy
     - kontrola: poznáme ji v každém panelu?
+    - **Splněno 22. 11. 2026:** rodič potvrdil, že Viky pozná ve všech 6 panelech (kapitoly `viky/01` a `viky/02`). Připomínky: bubliny nesmí zasahovat do hlavy, kšiltovka se v kapitole nemění (obojí zapracováno).
 3. **Brána: pokračovat, až když platí obojí**
     - čtení: aspoň 85 % slov rozpoznáno bez ručního posunu, odezva pod 1 s
     - loutky: dcera i rodič postavu poznají ve všech 6 panelech

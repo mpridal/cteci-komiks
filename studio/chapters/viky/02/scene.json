@@ -1,0 +1,69 @@
+{
+  "seriesId": "viky",
+  "chapter": 2,
+  "title": "VIKY A KROKODÝL",
+  "keywords": [],
+  "pages": [
+    {
+      "music": null,
+      "panels": [
+        {
+          "id": "p1",
+          "background": "zoo",
+          "shot": "celek",
+          "characters": [
+            { "id": "viky", "x": 0.3, "y": 0.97, "height": 0.8, "pose": "ukazovat", "expression": "prekvapeni", "outfit": "vychozi", "accessories": ["cepice_modra"] }
+          ],
+          "props": [
+            { "id": "croc", "prop": "croc", "x": 0.74, "y": 0.9, "width": 0.3, "layer": "animated" }
+          ],
+          "texts": [
+            { "id": "t1", "kind": "narration", "text": "VIKY JE V ZOO." },
+            { "id": "t2", "kind": "bubble", "speaker": "viky", "text": "TÁTO, KDO TO JE?", "anchor": [0.66, 0.15] }
+          ],
+          "cues": [
+            { "text": "t2", "word": "KDO", "type": "anim", "layer": "croc", "action": "bounce" }
+          ]
+        },
+        {
+          "id": "p2",
+          "background": "zoo",
+          "shot": "polocelek",
+          "characters": [
+            { "id": "viky", "x": 0.45, "y": 0.99, "height": 0.86, "pose": "drzet", "expression": "smich", "outfit": "vychozi", "accessories": ["cepice_modra"] }
+          ],
+          "props": [
+            { "id": "croc", "prop": "croc", "at": "viky.hands", "dx": 0.03, "dy": -0.01, "width": 0.36, "layer": "animated" }
+          ],
+          "texts": [
+            { "id": "t1", "kind": "narration", "text": "MALÝ KROKODÝL. VIKY HO DRŽÍ." },
+            { "id": "t2", "kind": "bubble", "speaker": "viky", "text": "JE MALÝ A MILÝ!", "anchor": [0.78, 0.17] }
+          ],
+          "cues": [
+            { "text": "t1", "word": "KROKODÝL.", "type": "anim", "layer": "croc", "action": "shake" },
+            { "text": "t2", "word": "MILÝ!", "type": "anim", "layer": "viky", "action": "bounce" }
+          ]
+        },
+        {
+          "id": "p3",
+          "background": "terrace",
+          "shot": "polocelek",
+          "characters": [
+            { "id": "viky", "x": 0.5, "y": 1.02, "height": 0.9, "pose": "sedet", "expression": "premysleni", "outfit": "vychozi", "accessories": ["cepice_modra"] }
+          ],
+          "props": [
+            { "id": "cookie", "prop": "cookie", "at": "viky.hands", "dy": -0.02, "width": 0.09, "layer": "animated" },
+            { "id": "table", "prop": "table_front", "x": 0.5, "y": 0.87, "width": 1.0, "layer": "front" }
+          ],
+          "texts": [
+            { "id": "t1", "kind": "narration", "text": "PAK MÁ VIKY SUŠENKU." },
+            { "id": "t2", "kind": "bubble", "speaker": "viky", "text": "MŇAM! A CO JÍ KROKODÝL?", "anchor": [0.76, 0.15] }
+          ],
+          "cues": [
+            { "text": "t2", "word": "MŇAM!", "type": "anim", "layer": "cookie", "action": "bounce" }
+          ]
+        }
+      ]
+    }
+  ]
+}

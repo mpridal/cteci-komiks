@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 400" width="240" height="400">
+<g id="arms_up__tshirt">
+<polyline points="82,186 61.7,173.8" fill="none" stroke="#2B2B2B" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="82,186 52,168 30,136" fill="none" stroke="#2B2B2B" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="82,186 52,168 30,136" fill="none" stroke="#EDBE98" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="82,186 61.7,173.8" fill="none" stroke="#F3EBD8" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="30" cy="136" rx="9.5" ry="9.5" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+<polyline points="158,186 178.3,173.8" fill="none" stroke="#2B2B2B" stroke-width="31" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="158,186 188,168 210,136" fill="none" stroke="#2B2B2B" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="158,186 188,168 210,136" fill="none" stroke="#EDBE98" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="158,186 178.3,173.8" fill="none" stroke="#F3EBD8" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="210" cy="136" rx="9.5" ry="9.5" fill="#EDBE98" stroke="#2B2B2B" stroke-width="2.5"/>
+</g>
+</svg>

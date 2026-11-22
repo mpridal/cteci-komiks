@@ -23,7 +23,7 @@ Kontroluje:
 
 Dělení slabik je jako ve slabikáři: souhlásky mezi samohláskami patří
 k následující slabice (MA-MI-NKA), koncové souhlásky k poslední slabice.
-CH je jedno písmeno.
+CH je jedno písmeno. R a L mezi souhláskami tvoří slabiku (VLK, DR-ŽÍ, KR-TEK).
 
 Návratový kód: 0 = bez chyb (varování nevadí), 1 = chyby v textu, 2 = chybný vstup.
 """
@@ -67,8 +67,16 @@ def letters(word: str) -> list[str]:
     return out
 
 
+def is_letter_consonant(l: str) -> bool:
+    return l not in VOWELS and (l == "CH" or l.isalpha())
+
+
 def nuclei(ls: list[str]) -> list[tuple[int, int]]:
-    """Vrátí rozsahy [start, end) samohláskových jader (dvojhláska AU/OU/EU = jedno jádro)."""
+    """Vrátí rozsahy [start, end) slabičných jader.
+
+    Jádro je samohláska, dvojhláska AU/OU/EU, nebo slabikotvorné R/L
+    (za souhláskou a před souhláskou nebo na konci: VLK, DR-ŽÍ, KR-TEK, BRA-TR).
+    """
     res: list[tuple[int, int]] = []
     i = 0
     while i < len(ls):
@@ -78,8 +86,15 @@ def nuclei(ls: list[str]) -> list[tuple[int, int]]:
                 i += 2
                 continue
             res.append((i, i + 1))
+        elif (ls[i] in ("R", "L") and i > 0 and is_letter_consonant(ls[i - 1])
+              and (i + 1 == len(ls) or is_letter_consonant(ls[i + 1]))):
+            res.append((i, i + 1))
         i += 1
     return res
+
+
+def has_vowel(ls: list[str]) -> bool:
+    return any(l in VOWELS for l in ls)
 
 
 def syllabify(word: str) -> list[str]:
@@ -111,7 +126,7 @@ def practice_categories(word: str, syl: list[str], profile: dict) -> list[str]:
         sl = letters(s)
         if len(sl) > max_easy:
             cats.add("long-syllable")
-        if not nuclei(sl):
+        if not has_vowel(sl):
             cats.add("no-vowel")
     up_syl = {s.upper() for s in syl}
     if strip_punct(word).upper() in focus or up_syl & focus:
