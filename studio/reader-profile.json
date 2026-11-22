@@ -1,0 +1,16 @@
+{
+  "name": "Viky",
+  "knownLetters": "AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ",
+  "fontStage": "UPPER",
+  "maxWordsPerSentence": 6,
+  "maxSyllablesPerWord": 3,
+  "maxWordsPerPanel": 12,
+  "maxBubblesPerPanel": 2,
+  "syllableHints": true,
+  "practice": {
+    "easySyllableMaxLetters": 2,
+    "minPerChapter": 8,
+    "maxPerSentence": 2,
+    "focus": []
+  }
+}

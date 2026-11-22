@@ -1,0 +1,35 @@
+# Fotky dítěte – nikdy necommitovat
+studio/photos/
+
+# Výstup balíčků (jde do GitHub Releases)
+dist/
+
+# Surové tréninkové exporty z tabletu (do repa jde jen history.json)
+studio/practice/inbox/
+
+# Lokální zálohy před úpravami
+_zaloha/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Android / Gradle
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+.kotlin/
+captures/
+*.apk
+*.aab
+
+# Náhledy (generují se skriptem)
+studio/chapters/**/previews/
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store

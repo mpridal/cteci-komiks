@@ -1,0 +1,5 @@
+# Studio: Python 3.12
+# check_text.py používá jen standardní knihovnu.
+jsonschema>=4.21
+cairosvg>=2.7
+pydub>=0.25
