@@ -1,0 +1,463 @@
+{
+  "formatVersion": 1,
+  "seriesId": "viky",
+  "chapter": 2,
+  "title": "VIKY A KROKODÝL",
+  "readerLevel": {
+    "fontStage": "UPPER"
+  },
+  "cover": "panels/cover.webp",
+  "audio": [],
+  "pages": [
+    {
+      "panels": [
+        {
+          "id": "p1",
+          "image": {
+            "type": "svg-layers",
+            "aspect": "4:3",
+            "layers": [
+              {
+                "id": "bg",
+                "file": "panels/p1/bg.svg"
+              },
+              {
+                "id": "viky",
+                "file": "panels/p1/viky.svg",
+                "box": [
+                  0.12,
+                  0.17,
+                  0.48,
+                  0.97
+                ]
+              },
+              {
+                "id": "croc",
+                "file": "panels/p1/croc.svg",
+                "box": [
+                  0.59,
+                  0.831,
+                  0.89,
+                  0.969
+                ]
+              }
+            ]
+          },
+          "texts": [
+            {
+              "id": "t1",
+              "kind": "narration",
+              "anchor": [
+                0.25,
+                0.08
+              ],
+              "words": [
+                {
+                  "w": "VIKY",
+                  "syl": [
+                    "VI",
+                    "KY"
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "vika",
+                      "víko",
+                      "vísky"
+                    ]
+                  }
+                },
+                {
+                  "w": "JE",
+                  "syl": [
+                    "JE"
+                  ]
+                },
+                {
+                  "w": "V",
+                  "syl": [
+                    "V"
+                  ],
+                  "practice": [
+                    "no-vowel"
+                  ]
+                },
+                {
+                  "w": "ZOO.",
+                  "syl": [
+                    "ZO",
+                    "O"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "t2",
+              "kind": "bubble",
+              "speaker": "viky",
+              "anchor": [
+                0.66,
+                0.15
+              ],
+              "words": [
+                {
+                  "w": "TÁTO,",
+                  "syl": [
+                    "TÁ",
+                    "TO"
+                  ]
+                },
+                {
+                  "w": "KDO",
+                  "syl": [
+                    "KDO"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ],
+                  "cues": [
+                    "p1c1"
+                  ]
+                },
+                {
+                  "w": "TO",
+                  "syl": [
+                    "TO"
+                  ]
+                },
+                {
+                  "w": "JE?",
+                  "syl": [
+                    "JE"
+                  ]
+                }
+              ]
+            }
+          ],
+          "cues": [
+            {
+              "id": "p1c1",
+              "type": "anim",
+              "layer": "croc",
+              "action": "bounce"
+            }
+          ]
+        },
+        {
+          "id": "p2",
+          "image": {
+            "type": "svg-layers",
+            "aspect": "4:3",
+            "layers": [
+              {
+                "id": "bg",
+                "file": "panels/p2/bg.svg"
+              },
+              {
+                "id": "viky",
+                "file": "panels/p2/viky.svg",
+                "box": [
+                  0.257,
+                  0.13,
+                  0.643,
+                  0.99
+                ]
+              },
+              {
+                "id": "croc",
+                "file": "panels/p2/croc.svg",
+                "box": [
+                  0.3,
+                  0.566,
+                  0.66,
+                  0.732
+                ]
+              }
+            ]
+          },
+          "texts": [
+            {
+              "id": "t1",
+              "kind": "narration",
+              "anchor": [
+                0.25,
+                0.08
+              ],
+              "words": [
+                {
+                  "w": "MALÝ",
+                  "syl": [
+                    "MA",
+                    "LÝ"
+                  ]
+                },
+                {
+                  "w": "KROKODÝL.",
+                  "syl": [
+                    "KRO",
+                    "KO",
+                    "DÝL"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ],
+                  "cues": [
+                    "p2c1"
+                  ]
+                },
+                {
+                  "w": "VIKY",
+                  "syl": [
+                    "VI",
+                    "KY"
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "vika",
+                      "víko",
+                      "vísky"
+                    ]
+                  }
+                },
+                {
+                  "w": "HO",
+                  "syl": [
+                    "HO"
+                  ]
+                },
+                {
+                  "w": "DRŽÍ.",
+                  "syl": [
+                    "DR",
+                    "ŽÍ"
+                  ],
+                  "practice": [
+                    "no-vowel"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "t2",
+              "kind": "bubble",
+              "speaker": "viky",
+              "anchor": [
+                0.78,
+                0.17
+              ],
+              "words": [
+                {
+                  "w": "JE",
+                  "syl": [
+                    "JE"
+                  ]
+                },
+                {
+                  "w": "MALÝ",
+                  "syl": [
+                    "MA",
+                    "LÝ"
+                  ]
+                },
+                {
+                  "w": "A",
+                  "syl": [
+                    "A"
+                  ]
+                },
+                {
+                  "w": "MILÝ!",
+                  "syl": [
+                    "MI",
+                    "LÝ"
+                  ],
+                  "cues": [
+                    "p2c2"
+                  ]
+                }
+              ]
+            }
+          ],
+          "cues": [
+            {
+              "id": "p2c1",
+              "type": "anim",
+              "layer": "croc",
+              "action": "shake"
+            },
+            {
+              "id": "p2c2",
+              "type": "anim",
+              "layer": "viky",
+              "action": "bounce"
+            }
+          ]
+        },
+        {
+          "id": "p3",
+          "image": {
+            "type": "svg-layers",
+            "aspect": "4:3",
+            "layers": [
+              {
+                "id": "bg",
+                "file": "panels/p3/bg.svg"
+              },
+              {
+                "id": "viky",
+                "file": "panels/p3/viky.svg",
+                "box": [
+                  0.297,
+                  0.12,
+                  0.703,
+                  1.02
+                ]
+              },
+              {
+                "id": "cookie",
+                "file": "panels/p3/cookie.svg",
+                "box": [
+                  0.455,
+                  0.599,
+                  0.545,
+                  0.708
+                ]
+              },
+              {
+                "id": "fg",
+                "file": "panels/p3/fg.svg",
+                "box": [
+                  0,
+                  0,
+                  1,
+                  1
+                ]
+              }
+            ]
+          },
+          "texts": [
+            {
+              "id": "t1",
+              "kind": "narration",
+              "anchor": [
+                0.25,
+                0.08
+              ],
+              "words": [
+                {
+                  "w": "PAK",
+                  "syl": [
+                    "PAK"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ]
+                },
+                {
+                  "w": "MÁ",
+                  "syl": [
+                    "MÁ"
+                  ]
+                },
+                {
+                  "w": "VIKY",
+                  "syl": [
+                    "VI",
+                    "KY"
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "vika",
+                      "víko",
+                      "vísky"
+                    ]
+                  }
+                },
+                {
+                  "w": "SUŠENKU.",
+                  "syl": [
+                    "SU",
+                    "ŠE",
+                    "NKU"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "sušenka",
+                      "sušenky"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": "t2",
+              "kind": "bubble",
+              "speaker": "viky",
+              "anchor": [
+                0.76,
+                0.15
+              ],
+              "words": [
+                {
+                  "w": "MŇAM!",
+                  "syl": [
+                    "MŇAM"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ],
+                  "cues": [
+                    "p3c1"
+                  ]
+                },
+                {
+                  "w": "A",
+                  "syl": [
+                    "A"
+                  ]
+                },
+                {
+                  "w": "CO",
+                  "syl": [
+                    "CO"
+                  ]
+                },
+                {
+                  "w": "JÍ",
+                  "syl": [
+                    "JÍ"
+                  ]
+                },
+                {
+                  "w": "KROKODÝL?",
+                  "syl": [
+                    "KRO",
+                    "KO",
+                    "DÝL"
+                  ],
+                  "practice": [
+                    "long-syllable"
+                  ]
+                }
+              ]
+            }
+          ],
+          "cues": [
+            {
+              "id": "p3c1",
+              "type": "anim",
+              "layer": "cookie",
+              "action": "bounce"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

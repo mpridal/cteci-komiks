@@ -237,6 +237,9 @@ def compose_chapter(scene_path: Path, profile_path: Path = check_text.DEFAULT_PR
         "audio": scene.get("audio", []),
         "pages": pages,
     }
+    import asr_hints
+    if asr_hints.VOCAB.exists():
+        asr_hints.annotate(chapter)
     (out / "chapter.json").write_text(json.dumps(chapter, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     rep = check_text.check_chapter(chapter, profile, scene.get("keywords", []))
     for msg in continuity_errors(scene):

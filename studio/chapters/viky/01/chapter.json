@@ -63,7 +63,15 @@
                   "syl": [
                     "VI",
                     "KY"
-                  ]
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "vika",
+                      "víko",
+                      "vísky"
+                    ]
+                  }
                 },
                 {
                   "w": "JDE",
@@ -188,7 +196,15 @@
                   "syl": [
                     "VI",
                     "KY"
-                  ]
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "vika",
+                      "víko",
+                      "vísky"
+                    ]
+                  }
                 },
                 {
                   "w": "SKÁČE",
@@ -259,7 +275,15 @@
                   ],
                   "cues": [
                     "p2c2"
-                  ]
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "straka",
+                      "strká",
+                      "střídka"
+                    ]
+                  }
                 }
               ]
             }
@@ -350,7 +374,15 @@
                   ],
                   "practice": [
                     "long-syllable"
-                  ]
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "mašle",
+                      "mysle",
+                      "másle"
+                    ]
+                  }
                 }
               ]
             },
@@ -390,7 +422,15 @@
                   ],
                   "cues": [
                     "p3c1"
-                  ]
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "müsli",
+                      "mysli",
+                      "myslí"
+                    ]
+                  }
                 },
                 {
                   "w": "CO",

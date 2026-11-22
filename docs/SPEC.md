@@ -156,6 +156,7 @@ Pravidla formátu:
 - Text nikdy není v obrázku, vždy v `texts` jako pole slov se slabikami. Interpunkce zůstává u slova, pro porovnání se odstraňuje.
 - `box` a `anchor` jsou relativní souřadnice panelu (0–1): `box` = [x1, y1, x2, y2] vrstvy, `anchor` = střed bubliny.
 - `practice` (volitelné) u slova = seznam kategorií těžkého slova. Doplňuje ho `check_text.py --annotate`, ručně se nepíše. Čtečka podle něj dává odměnu a zapisuje tréninkový záznam. Pole přibylo 22. 11. 2026 ve `formatVersion` 1 (volitelné, starší čtečka ho ignoruje, proto verze zůstává).
+- `asr` (volitelné) u slova, které nezná slovník rozpoznávače: `{"oov": true, "alt": ["vika", "víko"]}`. `alt` jsou podobně znějící slova ze slovníku modelu. Čtečka je přidá do gramatiky a bere je jako přečtení slova. U `oov` přijme i token `[unk]`, ale bez odměny. Doplňuje ho `compose.py` (přes `tools/asr_hints.py`), když existuje `studio/asr/vosk-cs-words.txt`. Pole přibylo 22. 11. 2026 ve `formatVersion` 1 (volitelné).
 - Značka (`cues`) se spustí, když čtenářka slovo přečte. Typy: `sfx`, `anim` (`bounce`, `jump`, `shake`, `wave`, `blink`), `music` (změna nálady).
 - `formatVersion` se zvyšuje při nekompatibilní změně. Čtečka balíček s vyšší verzí nenahraje a nabídne aktualizaci aplikace.
 - **Katalog** (`catalog.json` v posledním Release) obsahuje seznam kapitol: série, číslo, název, obálka, URL zipu, SHA-256, `formatVersion`, minimální verzi aplikace.
@@ -276,6 +277,10 @@ Aplikace řeč nepřepisuje, jen sleduje, kde v známém textu čtenářka je. V
 
 - Primárně Vosk (`com.alphacephei:vosk-android`) s malým českým modelem `vosk-model-small-cs-0.4-rhasspy` (asi 46 MB, licence MIT), přibaleným v aplikaci.
 - Pro každou stránku nový recognizer s gramatikou: slova stránky, jejich slabiky a `[unk]`. Jestli model přijme slabiky jako samostatná slova, ověří prototyp A.
+- **Zjištění prototypu A (22. 11. 2026, `docs/PROTOTYP-A.md`):**
+  - Gramatika jen ze slov stránky napasuje i cizí řeč na slova stránky (37–43 z 46 slov falešně). Výchozí je proto **volné rozpoznávání celým slovníkem modelu** + filtr šumu (`HypothesisFilter`: hlas aspoň 12 dB nad šumem, slovo stabilní 200 ms). Alternativa je gramatika stránky + 1000 rušivých slov.
+  - Slabiky model zná jen zčásti (17 z 38).
+  - Slova mimo slovník řeší pole `asr`.
 - Rozhraní `SpeechTracker` se dvěma implementacemi: `VoskTracker` a `AndroidSpeechTracker` (systémový `SpeechRecognizer`, cs-CZ, offline, pokud ho tablet podporuje). Volba v rodičovské sekci, výchozí podle výsledku prototypu.
 
 **Algoritmus sledování** (čistý Kotlin v `:reader-core`, pokrytý unit testy):

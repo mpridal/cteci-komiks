@@ -57,7 +57,15 @@
                   "syl": [
                     "VI",
                     "KY"
-                  ]
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "vika",
+                      "víko",
+                      "vísky"
+                    ]
+                  }
                 },
                 {
                   "w": "JE",
@@ -202,7 +210,15 @@
                   "syl": [
                     "VI",
                     "KY"
-                  ]
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "vika",
+                      "víko",
+                      "vísky"
+                    ]
+                  }
                 },
                 {
                   "w": "HO",
@@ -349,7 +365,15 @@
                   "syl": [
                     "VI",
                     "KY"
-                  ]
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "vika",
+                      "víko",
+                      "vísky"
+                    ]
+                  }
                 },
                 {
                   "w": "SUŠENKU.",
@@ -360,7 +384,14 @@
                   ],
                   "practice": [
                     "long-syllable"
-                  ]
+                  ],
+                  "asr": {
+                    "oov": true,
+                    "alt": [
+                      "sušenka",
+                      "sušenky"
+                    ]
+                  }
                 }
               ]
             },

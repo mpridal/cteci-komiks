@@ -1,0 +1,24 @@
+{
+  "pages": [
+    {
+      "chapter": "viky-01",
+      "panel": "p1"
+    },
+    {
+      "chapter": "viky-01",
+      "panel": "p2"
+    },
+    {
+      "chapter": "viky-01",
+      "panel": "p3"
+    },
+    {
+      "chapter": "viky-02",
+      "panel": "p1"
+    },
+    {
+      "chapter": "viky-02",
+      "panel": "p2"
+    }
+  ]
+}
