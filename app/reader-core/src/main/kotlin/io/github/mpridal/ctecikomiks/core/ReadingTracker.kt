@@ -11,6 +11,11 @@ data class TrackerConfig(
      * odměnu i za chybné čtení, např. SŘÍKÁ místo STŘÍKÁ). Posun kurzoru zůstává tolerantní.
      */
     val rewardRequiresExact: Boolean = true,
+    /**
+     * Hvězdička jen při jistotě rozpoznávače aspoň tolik (když ji rozpoznávač dává).
+     * asr-bench: správné čtení těžkého slova má jistotu 1,0, chybné „přitažené“ gramatikou často 0,5–0,6.
+     */
+    val rewardMinConf: Double = 0.9,
     /** Okno za kurzorem, ve kterém se hledá shoda (kurzor + window). */
     val window: Int = 3,
     /** Přijmout [unk] jako přečtení slova, které slovník rozpoznávače nezná. */
@@ -48,23 +53,27 @@ class ReadingTracker(val words: List<ReadWord>, private val config: TrackerConfi
      * Průběžný výsledek rozpoznávače (celá dosavadní hypotéza promluvy).
      * [ignore] = tokeny jen „spolknout“ (např. během zvuku z reproduktoru), nic neposouvat.
      */
-    fun onPartial(hypothesis: String, ignore: Boolean = false): List<TrackEvent> =
-        process(TextNorm.tokens(hypothesis), final = false, ignore = ignore)
+    fun onPartial(hypothesis: String, ignore: Boolean = false, confidences: List<Double?>? = null): List<TrackEvent> =
+        process(TextNorm.tokens(hypothesis), final = false, ignore = ignore, confidences = confidences)
 
     /** Konečný výsledek promluvy. Další promluva začíná od nuly. */
-    fun onFinal(hypothesis: String, ignore: Boolean = false): List<TrackEvent> =
-        process(TextNorm.tokens(hypothesis), final = true, ignore = ignore)
+    fun onFinal(hypothesis: String, ignore: Boolean = false, confidences: List<Double?>? = null): List<TrackEvent> =
+        process(TextNorm.tokens(hypothesis), final = true, ignore = ignore, confidences = confidences)
 
-    private fun process(tokens: List<String>, final: Boolean, ignore: Boolean): List<TrackEvent> {
+    private fun process(tokens: List<String>, final: Boolean, ignore: Boolean, confidences: List<Double?>?): List<TrackEvent> {
         val events = mutableListOf<TrackEvent>()
         if (tokens.size < consumedInUtterance) consumedInUtterance = tokens.size // rozpoznávač hypotézu zkrátil
-        if (!ignore) for (i in consumedInUtterance until tokens.size) events += feed(tokens[i])
+        if (!ignore) for (i in consumedInUtterance until tokens.size) events += feed(tokens[i], confidences?.getOrNull(i))
         consumedInUtterance = if (final) 0 else tokens.size
         return events
     }
 
-    /** Zpracuje jeden token. */
-    fun feed(token: String): List<TrackEvent> {
+    /** Jistota právě zpracovávaného tokenu (null = rozpoznávač ji nedává). */
+    private var tokenConf: Double? = null
+
+    /** Zpracuje jeden token; [conf] = jistota rozpoznávače, když je známá. */
+    fun feed(token: String, conf: Double? = null): List<TrackEvent> {
+        tokenConf = conf
         if (isDone) return emptyList()
         val raw = token.lowercase()
         if (raw == HypothesisFilter.REJECTED) return emptyList()
@@ -145,7 +154,8 @@ class ReadingTracker(val words: List<ReadWord>, private val config: TrackerConfi
         status[index] = WordStatus.READ
         // hvězdička jen za přímé a přesné přečtení těžkého slova (ne přeskočením, ne [unk], ne podobně)
         val reward = direct && words[index].isPractice && match.kind != MatchKind.UNK &&
-            (match.exact || !config.rewardRequiresExact)
+            (match.exact || !config.rewardRequiresExact) &&
+            (tokenConf == null || tokenConf!! >= config.rewardMinConf)
         events += TrackEvent.WordRead(index, match.kind, direct, reward)
         advanceTo(index + 1)
         if (isDone) events += TrackEvent.PageDone

@@ -21,7 +21,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import io.github.mpridal.ctecikomiks.BuildConfig
+import io.github.mpridal.ctecikomiks.CteciApp
+import io.github.mpridal.ctecikomiks.update.UpdateState
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -51,10 +62,12 @@ private val Paper = Color(0xFFFFFDF7)
 private val Narration = Color(0xFFFFF6D6)
 
 @Composable
-fun ProtoScreen(vm: ProtoViewModel) {
+fun ProtoScreen(vm: ProtoViewModel, app: CteciApp) {
     val s by vm.state.collectAsStateWithLifecycle()
+    var showSettings by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().background(Paper).padding(16.dp)) {
-        TopBar(s, vm)
+        UpdateBanner(app)
+        TopBar(s, vm, onSettings = { showSettings = true })
         Spacer(Modifier.padding(4.dp))
         val page = vm.page
         when {
@@ -63,10 +76,62 @@ fun ProtoScreen(vm: ProtoViewModel) {
             else -> PageView(page, s)
         }
     }
+    if (showSettings) SettingsDialog(app, onClose = { showSettings = false })
+}
+
+/** Lišta nové verze: stažená a ověřená aktualizace → instalace (potvrzuje Android). */
+@Composable
+private fun UpdateBanner(app: CteciApp) {
+    val st by app.updater.state.collectAsStateWithLifecycle()
+    val ctx = LocalContext.current
+    val d = st as? UpdateState.Downloaded ?: return
+    Row(Modifier.fillMaxWidth().background(Color(0xFFE3F2E1), RoundedCornerShape(8.dp)).padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Text("Nová verze ${d.version} je stažená.", fontSize = 18.sp, modifier = Modifier.weight(1f))
+        if (app.updater.canInstall()) {
+            Button(onClick = { app.updater.install() }) { Text("Nainstalovat") }
+        } else {
+            Button(onClick = {
+                ctx.startActivity(Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:${ctx.packageName}")))
+            }) { Text("Povolit instalaci") }
+        }
+    }
+    Spacer(Modifier.padding(4.dp))
+}
+
+/** Nastavení prototypu: verze, token pro odesílání záznamů do soukromého repa logů. */
+@Composable
+private fun SettingsDialog(app: CteciApp, onClose: () -> Unit) {
+    val status by app.uploader.status.collectAsStateWithLifecycle()
+    var token by remember { mutableStateOf("") }
+    AlertDialog(
+        onDismissRequest = onClose,
+        title = { Text("Nastavení prototypu") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Text("Verze ${BuildConfig.VERSION_NAME}")
+                Text("Záznamy relací se odesílají do soukromého repa ${BuildConfig.LOG_REPO}. Stav: $status")
+                Text(if (app.uploader.hasToken) "Token je uložený (šifrovaně)." else "Token zatím není uložený.")
+                OutlinedTextField(value = token, onValueChange = { token = it.trim() }, singleLine = true,
+                    label = { Text("GitHub token (github_pat_…)") }, modifier = Modifier.fillMaxWidth())
+            }
+        },
+        confirmButton = {
+            Button(onClick = { if (token.startsWith("github_pat_") || token.startsWith("ghp_")) app.uploader.setToken(token); onClose() }) {
+                Text("Uložit a odeslat")
+            }
+        },
+        dismissButton = {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedButton(onClick = { app.updater.checkNow(); app.uploader.uploadPending() }) { Text("Zkontrolovat teď") }
+                OutlinedButton(onClick = onClose) { Text("Zavřít") }
+            }
+        },
+    )
 }
 
 @Composable
-private fun TopBar(s: UiState, vm: ProtoViewModel) {
+private fun TopBar(s: UiState, vm: ProtoViewModel, onSettings: () -> Unit) {
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("Prototyp A", fontWeight = FontWeight.Bold, fontSize = 20.sp)
@@ -83,6 +148,7 @@ private fun TopBar(s: UiState, vm: ProtoViewModel) {
         Text(if (s.listening) "🎤 poslouchám" else if (!s.micAllowed) "🎤 bez povolení" else "🎤 …", fontSize = 18.sp)
         Spacer(Modifier.weight(1f))
         StarCounter(s.stars, s.rewardTick)
+        OutlinedButton(onClick = onSettings) { Text("⚙", fontSize = 20.sp) }
         Button(onClick = { vm.manualAdvance() }, enabled = !s.finished) { Text("Dál ▶", fontSize = 20.sp) }
     }
     if (s.error != null) Text(s.error, color = Color(0xFFB00020), fontSize = 16.sp)

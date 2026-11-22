@@ -67,13 +67,38 @@ class HypothesisFilter(private val config: FilterConfig = FilterConfig()) {
         while (firstSeen.size > tokens.size) firstSeen.removeAt(firstSeen.size - 1)
         while (decided.size > tokens.size) decided.removeAt(decided.size - 1)
 
+        while (decidedConf.size > decided.size) decidedConf.removeAt(decidedConf.size - 1)
         // rozhodnout stabilní tokeny v pořadí, rozhodnutí se nemění
         for (i in decided.size until tokens.size) {
             val (tok, since) = firstSeen[i]
             if (tMs - since < config.stableMs) break
             decided += if (voiced(since)) tok else REJECTED
+            decidedConf += pendingWords?.getOrNull(i)?.takeIf { it.first == tok }?.second
         }
         return decided.joinToString(" ")
+    }
+
+    private val decidedConf = mutableListOf<Double?>()
+    private var pendingWords: List<Pair<String, Double>>? = null
+
+    /**
+     * Jako [partial], navíc s jistotou slov (Vosk partial_result). Jistota rozhodnutého tokenu
+     * je ta z chvíle, kdy se stal stabilním; tracker ji použije pro odměnu.
+     */
+    fun partialWithConfidence(text: String, words: List<Pair<String, Double>>?, tMs: Long): Pair<String, List<Double?>> {
+        pendingWords = words
+        val out = partial(text, tMs)
+        pendingWords = null
+        return out to decidedConf.toList()
+    }
+
+    /** Jako [final], navíc s jistotou slov. */
+    fun finalWithConfidence(text: String, words: List<Pair<String, Double>>?, tMs: Long): Pair<String, List<Double?>> {
+        val keep = decidedConf.toList()
+        val out = final(text, words, tMs)
+        val n = TextNorm.tokens(out).size
+        val conf = List(n) { i -> if (i < keep.size) keep[i] else words?.getOrNull(i)?.second }
+        return out to conf
     }
 
     /**
@@ -92,6 +117,7 @@ class HypothesisFilter(private val config: FilterConfig = FilterConfig()) {
         }
         firstSeen.clear()
         decided.clear()
+        decidedConf.clear()
         return out.joinToString(" ")
     }
 

@@ -36,3 +36,6 @@ desktop.ini
 
 # Model Vosk v assets Čtečky (~67 MB, instaluje studio/tools/vosk_model.py)
 app/app/src/main/assets/model-cs/
+
+# Záznamy relací z tabletu/emulátoru (přepis čtení dítěte) – jen lokálně
+app/asr-bench/sessions/

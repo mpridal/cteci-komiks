@@ -23,7 +23,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        setContent { MaterialTheme { ProtoScreen(vm) } }
+        val app = application as CteciApp
+        setContent { MaterialTheme { ProtoScreen(vm, app) } }
+        app.updater.checkOnStart()
+        app.uploader.uploadPending()
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
             vm.onMicPermission(true)
         } else {

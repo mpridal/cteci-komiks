@@ -78,6 +78,16 @@ class ReadingTrackerTest {
         assertEquals(WordStatus.READ, t.status[0])
     }
 
+    @Test fun lowConfidenceExactMatchAdvancesWithoutReward() {
+        val t = ReadingTracker(listOf(w("STŘÍKÁ", practice = true), w("JE")))
+        val low = t.onPartial("stříká", confidences = listOf(0.55)).filterIsInstance<TrackEvent.WordRead>().single()
+        assertEquals(1, t.cursor)
+        assertFalse("gramatika přitáhla chybné čtení – jistota 0,55 → bez hvězdičky", low.reward)
+        val t2 = ReadingTracker(listOf(w("STŘÍKÁ", practice = true)))
+        val high = t2.onPartial("stříká", confidences = listOf(1.0)).filterIsInstance<TrackEvent.WordRead>().single()
+        assertTrue(high.reward)
+    }
+
     @Test fun piecesFromFreeRecognitionAreJoined() {
         // volné rozpoznávání vrátí slabiky jako slova, která nejsou ve slabikách stránky (např. "kro" chybí ve slovníku)
         val t = ReadingTracker(listOf(w("TO"), w("KOČKU.", "KO", "ČKU", practice = true)))

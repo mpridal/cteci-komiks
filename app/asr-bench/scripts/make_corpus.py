@@ -7,8 +7,10 @@ Použití (ze složky app/):
 Čtení generuje český systémový hlas Windows (Jakub) slovo po slově s pauzami jako začínající
 čtenářka; časy konců slov jdou do manifest.json (pro přesné měření odezvy).
 Scénáře: read (čtení stránky), syllables (víceslabičná slova po slabikách), misread (těžká slova
-špatně), child_* (totéž vyšším hlasem, pomaleji, se zaváháním a „ehm“), read_babble (čtení +
-anglický hovor v pozadí), silence, noise, hum, babble_en, talk_cs.
+špatně), child_* (totéž vyšším hlasem, pomaleji, se zaváháním a „ehm“), read_talk (čtení +
+český hovor v pozadí), silence, noise, hum a cizí český hovor: talk_cs (dospělý, zprávy),
+talk_cs_home (dospělý, řeč doma), talk_cs_child (dětský hlas – sourozenec).
+Vše jen česky: Čtečka je pro češtinu, doma kolem čtenářky mluví česky.
 """
 from __future__ import annotations
 
@@ -30,8 +32,10 @@ PUNCT = ".,!?…:;\"„“”'()"
 
 FOREIGN_CS = ("Dnes bude polojasno, odpoledne místy přeháňky. Teploty vystoupí na dvacet stupňů. "
               "Na horách může foukat silný vítr, v nížinách bude klid. Zítra se ochladí.")
-FOREIGN_EN = ("The weather today will be mostly sunny with a light breeze from the west. "
-              "In the afternoon, clouds will gather over the hills and there may be a short shower.")
+HOME_CS = ("Kde máš boty? Pojď se najíst, polévka stydne. Až dočteš, půjdeme ven se psem. "
+           "Zavolej babičce, že přijedeme v neděli. Ten film začíná v osm.")
+SIBLING_CS = ("Mami, já chci taky! To je moje auto. Pojď si hrát na schovávanou. "
+              "Já mám hlad. Kde je můj medvídek? Já jsem první!")
 
 
 def tts(text: str, voice: str, out: Path, rate: float = 1.0, pitch: float = 1.0) -> list[float]:
@@ -149,8 +153,9 @@ def main(argv=None) -> int:
     cache: dict = {}
     scenarios = []
 
-    babble = trim(tts(FOREIGN_EN, "Zira", tmp / "en.wav")) + silence(0.3) + trim(tts(FOREIGN_EN, "David", tmp / "en2.wav"))
     talk_cs = trim(tts(FOREIGN_CS, "Jakub", tmp / "cs.wav"))
+    talk_home = trim(tts(HOME_CS, "Jakub", tmp / "home.wav", 1.0, 0.85))       # jiný dospělý hlas
+    talk_child = trim(tts(SIBLING_CS, "Jakub", tmp / "sib.wav", 0.9, 1.7))     # sourozenec
     rnd = random.Random(3)
     white = [rnd.gauss(0, 0.05) for _ in range(20 * RATE)]
     hum = [0.04 * math.sin(2 * math.pi * 100 * i / RATE) + rnd.gauss(0, 0.01) for i in range(20 * RATE)]
@@ -168,13 +173,14 @@ def main(argv=None) -> int:
             write(out / f"{name}.wav", audio)
             scenarios.append({"name": name, "kind": f"child_{mode}", "page": pi, "wav": f"{name}.wav",
                               "wordEndsMs": ends, "spokenWords": idxs})
-        audio, ends, idxs = reading(page["words"], tmp, "read", cache)
-        name = f"p{pi + 1}_read_babble"
-        write(out / f"{name}.wav", mix(audio, babble, 0.35))
-        scenarios.append({"name": name, "kind": "read_babble", "page": pi, "wav": f"{name}.wav",
+        # dítě čte, v pozadí tišeji mluví dospělý (televize/rozhovor ve vedlejší místnosti)
+        audio, ends, idxs = reading(page["words"], tmp, "read", cache, CHILD, seed=pi + 11)
+        name = f"p{pi + 1}_read_talk"
+        write(out / f"{name}.wav", mix(audio, talk_home, 0.25))
+        scenarios.append({"name": name, "kind": "read_talk", "page": pi, "wav": f"{name}.wav",
                           "wordEndsMs": ends, "spokenWords": idxs})
         for kind, sig in (("silence", silence(15)), ("noise", white), ("hum", hum),
-                          ("babble_en", babble), ("talk_cs", talk_cs)):
+                          ("talk_cs", talk_cs), ("talk_cs_home", talk_home), ("talk_cs_child", talk_child)):
             name = f"p{pi + 1}_{kind}"
             write(out / f"{name}.wav", sig)
             scenarios.append({"name": name, "kind": kind, "page": pi, "wav": f"{name}.wav"})

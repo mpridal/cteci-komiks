@@ -16,7 +16,8 @@ Mimo rozsah první verze:
 - bitmapové obrázky z AI (Gemini apod.) – formát balíčku je na ně jen připravený (varianta B),
 - zvuky generované AI,
 - jakékoli volání AI služby z Android aplikace,
-- více dětí a profilů, iOS.
+- více dětí a profilů, iOS,
+- jazykové mutace: aplikace, texty i rozpoznávání řeči jsou jen česky (rozhodnuto 22. 11. 2026).
 
 ## Architektura
 
@@ -278,7 +279,7 @@ Aplikace řeč nepřepisuje, jen sleduje, kde v známém textu čtenářka je. V
 - Primárně Vosk (`com.alphacephei:vosk-android`) s malým českým modelem `vosk-model-small-cs-0.4-rhasspy` (asi 46 MB, licence MIT), přibaleným v aplikaci.
 - Pro každou stránku nový recognizer s gramatikou: slova stránky, jejich slabiky a `[unk]`. Jestli model přijme slabiky jako samostatná slova, ověří prototyp A.
 - **Zjištění prototypu A (22. 11. 2026, `docs/PROTOTYP-A.md`):**
-  - Gramatika jen ze slov stránky napasuje i cizí řeč na slova stránky (37–43 z 46 slov falešně). Výchozí je proto **volné rozpoznávání celým slovníkem modelu** + filtr šumu (`HypothesisFilter`: hlas aspoň 12 dB nad šumem, slovo stabilní 200 ms). Alternativa je gramatika stránky + 1000 rušivých slov.
+  - Gramatika jen ze slov stránky napasuje i cizí český hovor na slova stránky (38 z 46 slov falešně). Výchozí je proto **volné rozpoznávání celým slovníkem modelu** + filtr šumu (`HypothesisFilter`: hlas aspoň 12 dB nad šumem, slovo stabilní 200 ms). Alternativa je gramatika stránky + 1000 rušivých slov.
   - Slabiky model zná jen zčásti (17 z 38).
   - Slova mimo slovník řeší pole `asr`.
 - Rozhraní `SpeechTracker` se dvěma implementacemi: `VoskTracker` a `AndroidSpeechTracker` (systémový `SpeechRecognizer`, cs-CZ, offline, pokud ho tablet podporuje). Volba v rodičovské sekci, výchozí podle výsledku prototypu.
@@ -333,6 +334,11 @@ Fotky ani hlas dítěte neopouštějí rodinná zařízení, kromě jednorázov�
 - **Tréninkový záznam:** jen slova z textu kapitoly, výsledek a doby čtení. Opouští tablet jen ručním sdílením rodiče. Repo je veřejné, proto je celá složka `studio/practice/` v `.gitignore` (zůstává jen v PC a v OneDrive). Do repa se dostane jen `practice.focus` v profilu, tedy seznam slov k procvičení bez výsledků.
 - **Repo:** veřejné (`mpridal/cteci-komiks`, rozhodnuto 22. 11. 2026). Čtečka stahuje katalog a balíčky z veřejných Releases bez tokenu. Veřejné jsou proto i kapitoly, jméno Viky a kreslená postava. Fotky, tréninkové záznamy a cokoli dalšího o dítěti zůstávají jen lokálně (v `.gitignore`).
 - **Síť:** Čtečka komunikuje jen s GitHubem. Žádné reklamy, analytika ani AI služby.
+- **Test na tabletu (prototyp A, od 22. 11. 2026, `docs/TABLET.md`):**
+    - Záznamy relací (přepis rozpoznávače, hlasitost, žádný zvuk) a deník aplikace se odesílají do **soukromého** repa `mpridal/cteci-komiks-logs`.
+    - Používá se fine-grained token jen pro toto repo. Rodič ho zadá v ⚙ a uloží se šifrovaně přes Android Keystore.
+    - Aplikace se aktualizuje z veřejných Releases: kontroluje SHA-256 a podpis, instalaci potvrzuje uživatel.
+    - Podpisový klíč je jen v počítači rodiče a v GitHub Secrets.
 - **AI:** generuje jen rodič v interaktivní relaci Claude Code. Aplikace se k předplatnému nepřihlašuje.
 - **Balíčky:** Čtečka před rozbalením ověří SHA-256 z katalogu a odmítne cesty mimo cílovou složku (ochrana proti zip slip). SVG s odkazy, skripty nebo externími zdroji nevykreslí.
 - **Rodičovský zámek:** nastavení, stažení a export záznamu jsou za jednoduchým zámkem.
@@ -388,6 +394,17 @@ Tyto body rozhodne rodič. Claude Code se na ně zeptá, než dojde k části, k
 - [ ] Psací písmo: který font odpovídá školnímu (Comenia Script, nebo klasické psací) a má licenci použitelnou v aplikaci?
 - [x] Jméno hlavní postavy v příběhu: Viky (VI-KY).
 - [x] Repo soukromé s tokenem, nebo veřejné? Veřejné, bez tokenu: `github.com/mpridal/cteci-komiks`.
-- [ ] Jaký stack mají Deskovky a ThermoCamera a dá se z nich převzít modul pro aktualizace z GitHubu?
+- [x] Jaký stack mají Deskovky a ThermoCamera a dá se z nich převzít modul pro aktualizace z GitHubu? (průzkum 22. 11. 2026)
+    - **Deskovky:** zatím jen zadání, kód neexistuje.
+    - **ThermoCamera** (`C:\dev\thermocamera`) má stejný stack jako Čtečka (Kotlin + Compose, AGP 9.5, Hilt). Aktualizace:
+        - `UpdatePolicy` v čistém Kotlinu, s testy: semver, rozhodnutí o stažení, SHA-256,
+        - `Updater` v aplikaci: GitHub API `releases/latest` bez tokenu, `HttpURLConnection`, stahování s navazováním, kontrola SHA-256 a podpisu, instalace přes `PackageInstaller` s potvrzením uživatele,
+        - workflow: tag `vX.Y.Z` → podepsané APK + `.sha256` v Release.
+    - **Jakotata** má jednodušší variantu s `latest.json` (verze + SHA-256), blízkou našemu `catalog.json`.
+    - **Plán pro MVP:** převzít `UpdatePolicy` + test a jádro `Updater` (stahování s navazováním, hash, podpis, PackageInstaller) do modulu `:sync`. Úpravy:
+        - konfigurace parametry místo `BuildConfig`, bez Hilt,
+        - jedno volání `releases/latest` i pro `catalog.json`,
+        - kapitoly do vlastní složky s ochranou proti zip slip a atomickým rozbalením.
+    - Oba repozitáře jsou tvoje a nemají LICENSE, převzetí v rámci vlastních projektů je v pořádku.
 - [ ] Kolik kapitol týdně? Podle toho velikost startovní knihovny zvuků.
 - [ ] Má Studio běžet jen na PC, nebo i z Claude Code na webu nebo v mobilu nad stejným repem? (fotky by pak musely do relace jinou cestou)

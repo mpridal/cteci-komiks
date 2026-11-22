@@ -46,6 +46,17 @@ class HypothesisFilterTest {
         assertEquals("to ${HypothesisFilter.REJECTED}", out)
     }
 
+    @Test fun confidenceTravelsWithStableTokens() {
+        val f = HypothesisFilter(FilterConfig(minSnrDb = 0.0, stableMs = 200))
+        f.partialWithConfidence("to", listOf("to" to 0.6), 0)
+        val (text, conf) = f.partialWithConfidence("to je", listOf("to" to 0.97, "je" to 0.8), 200)
+        assertEquals("to", text)
+        assertEquals(listOf<Double?>(0.97), conf)
+        val (fin, fconf) = f.finalWithConfidence("to je", listOf("to" to 1.0, "je" to 0.5), 300)
+        assertEquals("to je", fin)
+        assertEquals(listOf<Double?>(0.97, 0.5), fconf)
+    }
+
     @Test fun trackerIgnoresRejectedTokens() {
         val t = ReadingTracker(listOf(ReadWord("TO", listOf("TO")), ReadWord("JE", listOf("JE"))))
         t.onPartial("${HypothesisFilter.REJECTED} je")

@@ -10,7 +10,7 @@ interface SpeechEngine {
     interface Listener {
         fun onReady() {}
         /** Průběžná hypotéza celé promluvy (u Vosku každých 0,1 s, i beze změny). */
-        fun onPartial(text: String)
+        fun onPartial(text: String, words: List<Pair<String, Double>>? = null)
         /** Konečný výsledek promluvy; [words] = slova s jistotou, když je rozpoznávač dává. */
         fun onFinal(text: String, words: List<Pair<String, Double>>? = null)
         fun onError(message: String)

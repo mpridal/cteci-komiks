@@ -62,7 +62,7 @@ class VoskEngine(private val context: Context) : SpeechEngine {
         val recognizer = try {
             // null = volné rozpoznávání celým slovníkem (cizí řeč pak nevychází jako slova stránky)
             (if (grammar != null) Recognizer(m, SAMPLE_RATE.toFloat(), JSONArray(grammar).toString())
-            else Recognizer(m, SAMPLE_RATE.toFloat())).apply { setWords(true) }
+            else Recognizer(m, SAMPLE_RATE.toFloat())).apply { setWords(true) } // ne setPartialWords: zhoršuje rozpoznávání (asr-bench)
         } catch (e: Exception) {
             listener.onError("Recognizer: ${e.message}")
             return
@@ -101,8 +101,12 @@ class VoskEngine(private val context: Context) : SpeechEngine {
                     main.post { listener.onFinal(text, words) }
                 } else {
                     // každý úsek, i beze změny – filtr šumu potřebuje čas, jak dlouho je slovo stabilní
-                    val p = JSONObject(recognizer.partialResult).optString("partial")
-                    main.post { listener.onPartial(p) }
+                    val pr = JSONObject(recognizer.partialResult)
+                    val p = pr.optString("partial")
+                    val pw = pr.optJSONArray("partial_result")?.let { a ->
+                        (0 until a.length()).map { i -> a.getJSONObject(i).let { it.getString("word") to it.optDouble("conf", 1.0) } }
+                    }
+                    main.post { listener.onPartial(p, pw) }
                 }
             }
         } catch (e: Exception) {

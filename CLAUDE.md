@@ -7,6 +7,7 @@ Aplikace pro trénink čtení: Studio (tento repozitář ovládaný z Claude Cod
 ## Jak pracovat
 
 - Komunikuj česky.
+- Vše jen česky: aplikace nemá jazykové mutace, rozpoznávání i testy (asr-bench) řeší jen češtinu.
 - Začni prototypy A a B (SPEC.md, sekce Fáze vývoje). MVP nestav, dokud neprojde brána.
 - Než začneš část, které se týká některá z Otevřených otázek, zeptej se.
 - Jako první krok založ `.gitignore` se `studio/photos/` a `dist/`. Fotky nikdy necommituj.

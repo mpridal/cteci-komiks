@@ -10,6 +10,7 @@ import io.github.mpridal.ctecikomiks.core.FilterConfig
 import io.github.mpridal.ctecikomiks.core.HypothesisFilter
 import io.github.mpridal.ctecikomiks.core.PageStats
 import io.github.mpridal.ctecikomiks.core.ReadingTracker
+import io.github.mpridal.ctecikomiks.core.RewardGate
 import io.github.mpridal.ctecikomiks.core.TrackEvent
 import io.github.mpridal.ctecikomiks.core.WordStatus
 import io.github.mpridal.ctecikomiks.data.ProtoContent
@@ -32,7 +33,7 @@ import java.util.Locale
 enum class EngineKind(val label: String) { VOSK("Vosk"), SYSTEM("Systém") }
 
 /** Režim gramatiky Vosku (asr-bench: volně = nejméně falešných posunů od cizí řeči). */
-enum class GrammarMode(val label: String) { FREE("Volně"), DISTRACT("Stránka + 1000"), PAGE("Jen stránka") }
+enum class GrammarMode(val label: String) { DISTRACT("Stránka + 1000"), FREE("Volně"), PAGE("Jen stránka") }
 
 data class EngineSummary(
     val engine: EngineKind,
@@ -47,7 +48,7 @@ data class EngineSummary(
 data class UiState(
     val loading: Boolean = true,
     val engine: EngineKind = EngineKind.VOSK,
-    val grammarMode: GrammarMode = GrammarMode.FREE,
+    val grammarMode: GrammarMode = GrammarMode.DISTRACT, // asr-bench: nejlepší dětské čtení i slabikování
     val pageIndex: Int = 0,
     val pageCount: Int = 0,
     val statuses: List<WordStatus> = emptyList(),
@@ -74,7 +75,10 @@ class ProtoViewModel(app: Application) : AndroidViewModel(app) {
     private val sfx = Sfx(app)
     private val engines = mapOf(EngineKind.VOSK to VoskEngine(app), EngineKind.SYSTEM to SystemEngine(app))
     private var tracker: ReadingTracker? = null
+    private var gate: RewardGate? = null
+    private var filterConfig = FilterConfig()
     private var filter = HypothesisFilter()
+    private var pageLevels = JSONArray()
     private val distractors: List<String> by lazy {
         runCatching { app.assets.open("proto/distractors.txt").bufferedReader().readLines().filter { it.isNotBlank() } }
             .getOrDefault(emptyList())
@@ -141,14 +145,15 @@ class ProtoViewModel(app: Application) : AndroidViewModel(app) {
     private fun openPage(index: Int) {
         val p = pages.getOrNull(index) ?: return
         tracker = ReadingTracker(p.words)
+        gate = RewardGate(p.words)
         val engine = engines.getValue(_state.value.engine)
         // nastavení z asr-bench; systémový rozpoznávač nedává hlasitost ani průběžné výsledky v taktu
-        filter = HypothesisFilter(
-            if (engine.providesAudioLevel) FilterConfig(minSnrDb = 12.0, stableMs = 200)
-            else FilterConfig(minSnrDb = 0.0, stableMs = 0)
-        )
+        filterConfig = if (engine.providesAudioLevel) FilterConfig(minSnrDb = 12.0, stableMs = 200)
+        else FilterConfig(minSnrDb = 0.0, stableMs = 0)
+        filter = HypothesisFilter(filterConfig)
         pageStart = SystemClock.elapsedRealtime()
         pageLog = JSONArray()
+        pageLevels = JSONArray()
         lastVoiceEnd = 0
         _state.update {
             it.copy(pageIndex = index, statuses = p.words.map { WordStatus.PENDING }, cursor = 0,
@@ -173,14 +178,19 @@ class ProtoViewModel(app: Application) : AndroidViewModel(app) {
     private val listener = object : SpeechEngine.Listener {
         override fun onReady() = _state.update { it.copy(listening = true, error = null) }
 
-        override fun onPartial(text: String) = onHypothesis(text, null, final = false)
+        override fun onPartial(text: String, words: List<Pair<String, Double>>?) = onHypothesis(text, words, final = false)
 
         override fun onFinal(text: String, words: List<Pair<String, Double>>?) = onHypothesis(text, words, final = true)
 
-        override fun onAudioLevel(rms: Double, atMs: Long) = filter.onAudio(rms, atMs)
+        override fun onAudioLevel(rms: Double, atMs: Long) {
+            filter.onAudio(rms, atMs)
+            // pro přehrání záznamu (asr-bench replay): čas od začátku stránky a hlasitost
+            pageLevels.put(JSONArray().put(atMs - pageStart).put(rms.toInt()))
+        }
 
         override fun onError(message: String) {
             Log.w(TAG, message)
+            getApplication<io.github.mpridal.ctecikomiks.CteciApp>().log.w("rozpoznávač: $message")
             _state.update { it.copy(error = message) }
         }
 
@@ -190,19 +200,32 @@ class ProtoViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     private var lastLogged = ""
+    private var lastLoggedWords: List<Pair<String, Double>>? = null
 
     private fun onHypothesis(text: String, words: List<Pair<String, Double>>?, final: Boolean) {
         val t = tracker ?: return
         val now = SystemClock.elapsedRealtime()
         val ignore = now < ignoreUntil
-        val accepted = if (final) filter.final(text, words, now) else filter.partial(text, now)
-        if (final || text != lastLogged) {
-            logEvent(if (final) "final" else "partial", "$text → $accepted", ignore)
+        val (accepted, conf) = if (final) filter.finalWithConfidence(text, words, now)
+        else filter.partialWithConfidence(text, words, now)
+        if (final || text != lastLogged || words != lastLoggedWords) {
+            logHypothesis(if (final) "final" else "partial", text, accepted, words, ignore, now)
             lastLogged = if (final) "" else text
+            lastLoggedWords = if (final) null else words
         }
-        val events = if (final) t.onFinal(accepted, ignore) else t.onPartial(accepted, ignore)
+        val events = if (final) t.onFinal(accepted, ignore, conf) else t.onPartial(accepted, ignore, conf)
         _state.update { it.copy(heard = text.ifEmpty { it.heard }) }
         handle(events, now, recognized = true)
+        // hvězdička se potvrzuje až jistotou slov v konečném výsledku (RewardGate)
+        if (final) gate?.let { awardStars(it.onFinal(words)) }
+    }
+
+    private fun awardStars(indices: List<Int>) {
+        if (indices.isEmpty()) return
+        sessionRewards += indices.size
+        playSfx("cink")
+        logEvent("reward", indices.joinToString(","), false)
+        _state.update { it.copy(stars = it.stars + indices.size, rewardTick = it.rewardTick + 1) }
     }
 
     /** Tlačítko „dál“: posune o jedno slovo (počítá se jako ruční posun). */
@@ -219,15 +242,11 @@ class ProtoViewModel(app: Application) : AndroidViewModel(app) {
         val p = page ?: return
         val t = tracker ?: return
         var latency: Long? = null
+        gate?.offer(events)
         for (e in events) {
             when (e) {
                 is TrackEvent.WordRead -> {
                     fireCues(p.words[e.index].cues)
-                    if (e.reward) {
-                        sessionRewards++
-                        playSfx("cink")
-                        _state.update { it.copy(stars = it.stars + 1, rewardTick = it.rewardTick + 1) }
-                    }
                     if (recognized && e.direct && lastVoiceEnd > 0 && now - lastVoiceEnd in 0..3000) {
                         latency = now - lastVoiceEnd
                         latencies += latency
@@ -264,17 +283,24 @@ class ProtoViewModel(app: Application) : AndroidViewModel(app) {
     private fun finishPage() {
         val t = tracker ?: return
         engines[_state.value.engine]?.stop()
+        gate?.let { awardStars(it.flush()) }
         _state.update { it.copy(listening = false) }
         sessionStats += t.stats()
         log.put(JSONObject().apply {
             put("engine", _state.value.engine.name)
+            put("mode", modeLabel)
+            put("filter", filterConfig.toString())
             put("panel", "${page?.chapterTitle}/${page?.panelId}")
-            put("words", JSONArray(page?.words?.map { it.text }))
+            put("words", JSONArray(page?.words?.map { w ->
+                JSONObject().put("w", w.text).put("syl", JSONArray(w.syllables)).put("practice", JSONArray(w.practice))
+                    .put("asr", JSONArray(w.asr)).put("oov", !w.inVocabulary)
+            }))
             put("stats", JSONObject().apply {
                 val s = t.stats(); put("total", s.total); put("recognized", s.recognized)
                 put("skipped", s.skipped); put("manual", s.manual)
             })
             put("events", pageLog)
+            put("levels", pageLevels)
         })
         playSfx("fanfare")
         viewModelScope.launch {
@@ -288,6 +314,10 @@ class ProtoViewModel(app: Application) : AndroidViewModel(app) {
         val kind = _state.value.engine
         val summary = EngineSummary(kind, modeLabel, sessionStats, sessionRewards, latencies.toList())
         val file = saveLog(summary)
+        getApplication<io.github.mpridal.ctecikomiks.CteciApp>().run {
+            log.i("relace hotová: ${summary.mode}, ${"%.0f".format(summary.stats.autoRatio * 100)} % bez ručního posunu")
+            uploader.uploadPending()
+        }
         Log.i(TAG, "Souhrn ${summary.mode}: ${summary.stats} auto=${summary.stats.autoRatio} odezva=${summary.medianLatency} → $file")
         _state.update {
             it.copy(finished = true, listening = false, summaries = it.summaries + (summary.mode to summary), savedLog = file)
@@ -299,6 +329,7 @@ class ProtoViewModel(app: Application) : AndroidViewModel(app) {
         val stamp = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.ROOT).format(Date())
         val f = File(dir, "proto-a-${summary.engine.name.lowercase()}-$stamp.json")
         f.writeText(JSONObject().apply {
+            put("format", "proto-a-session/2")
             put("engine", summary.engine.name)
             put("mode", summary.mode)
             put("autoRatio", summary.stats.autoRatio)
@@ -308,6 +339,18 @@ class ProtoViewModel(app: Application) : AndroidViewModel(app) {
         }.toString(2))
         f.absolutePath
     }.getOrNull()
+
+    private fun logHypothesis(type: String, raw: String, accepted: String, words: List<Pair<String, Double>>?,
+                              ignored: Boolean, now: Long) {
+        pageLog.put(JSONObject().apply {
+            put("t", now - pageStart)
+            put("type", type)
+            put("raw", raw)
+            put("accepted", accepted)
+            words?.let { put("words", JSONArray(it.map { (w, c) -> JSONArray().put(w).put(c) })) }
+            if (ignored) put("ignored", true)
+        })
+    }
 
     private fun logEvent(type: String, text: String, ignored: Boolean) {
         pageLog.put(JSONObject().apply {

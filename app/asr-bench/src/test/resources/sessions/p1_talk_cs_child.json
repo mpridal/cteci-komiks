@@ -1,0 +1,864 @@
+{
+ "mode": "stránka+1000 / hlas+stabilita",
+ "pages": [{
+  "filter": "FilterConfig(minSnrDb=12.0, voiceHoldMs=700, stableMs=200, minConf=0.0, floorWindowMs=4000)",
+  "stats": {
+   "total": 10,
+   "recognized": 1,
+   "manual": 0,
+   "skipped": 0
+  },
+  "words": [
+   {
+    "asr": [],
+    "practice": [],
+    "w": "JE",
+    "syl": ["JE"],
+    "oov": false
+   },
+   {
+    "asr": [],
+    "practice": ["long-syllable"],
+    "w": "TEPLO.",
+    "syl": [
+     "TE",
+     "PLO"
+    ],
+    "oov": false
+   },
+   {
+    "asr": [
+     "vika",
+     "víko",
+     "vísky"
+    ],
+    "practice": [],
+    "w": "VIKY",
+    "syl": [
+     "VI",
+     "KY"
+    ],
+    "oov": true
+   },
+   {
+    "asr": [],
+    "practice": ["long-syllable"],
+    "w": "JDE",
+    "syl": ["JDE"],
+    "oov": false
+   },
+   {
+    "asr": [],
+    "practice": ["no-vowel"],
+    "w": "K",
+    "syl": ["K"],
+    "oov": false
+   },
+   {
+    "asr": [],
+    "practice": [],
+    "w": "MOŘI.",
+    "syl": [
+     "MO",
+     "ŘI"
+    ],
+    "oov": false
+   },
+   {
+    "asr": [],
+    "practice": [],
+    "w": "HURÁ!",
+    "syl": [
+     "HU",
+     "RÁ"
+    ],
+    "oov": false
+   },
+   {
+    "asr": [],
+    "practice": [],
+    "w": "TO",
+    "syl": ["TO"],
+    "oov": false
+   },
+   {
+    "asr": [],
+    "practice": [],
+    "w": "JE",
+    "syl": ["JE"],
+    "oov": false
+   },
+   {
+    "asr": [],
+    "practice": [],
+    "w": "VODA!",
+    "syl": [
+     "VO",
+     "DA"
+    ],
+    "oov": false
+   }
+  ],
+  "panel": "p1_talk_cs_child",
+  "events": [
+   {
+    "t": 400,
+    "raw": "maminku",
+    "accepted": "",
+    "type": "partial"
+   },
+   {
+    "t": 600,
+    "raw": "bedlami",
+    "accepted": "",
+    "type": "partial"
+   },
+   {
+    "t": 1100,
+    "raw": "maminku játra",
+    "accepted": "",
+    "type": "partial"
+   },
+   {
+    "t": 1600,
+    "raw": "maminku nácci",
+    "accepted": "maminku",
+    "type": "partial"
+   },
+   {
+    "t": 2100,
+    "raw": "maminku nácci taký",
+    "accepted": "maminku nácci",
+    "type": "partial"
+   },
+   {
+    "t": 2600,
+    "words": [
+     [
+      "maminku",
+      1
+     ],
+     [
+      "nácci",
+      1
+     ],
+     [
+      "taký",
+      1
+     ]
+    ],
+    "raw": "maminku nácci taký",
+    "accepted": "maminku nácci taký",
+    "type": "final"
+   },
+   {
+    "t": 3000,
+    "raw": "nocuje mojí",
+    "accepted": "",
+    "type": "partial"
+   },
+   {
+    "t": 3300,
+    "raw": "nocuje",
+    "accepted": "nocuje",
+    "type": "partial"
+   },
+   {
+    "t": 3800,
+    "raw": "nocuje pouta",
+    "accepted": "nocuje",
+    "type": "partial"
+   },
+   {
+    "t": 4200,
+    "words": [
+     [
+      "nocuje",
+      1
+     ],
+     [
+      "pouta",
+      0.41309
+     ]
+    ],
+    "raw": "nocuje pouta",
+    "accepted": "nocuje pouta",
+    "type": "final"
+   },
+   {
+    "t": 4700,
+    "raw": "pojmů",
+    "accepted": "",
+    "type": "partial"
+   },
+   {
+    "t": 5000,
+    "raw": "spojit psy",
+    "accepted": "",
+    "type": "partial"
+   },
+   {
+    "t": 5200,
+    "raw": "spojit psy hráčů",
+    "accepted": "spojit psy",
+    "type": "partial"
+   },
+   {
+    "t": 5700,
+    "raw": "spojit psy hráčů laskavý",
+    "accepted": "spojit psy hráčů",
+    "type": "partial"
+   },
+   {
+    "t": 5900,
+    "raw": "spojit psy hráčů ďas kováře",
+    "accepted": "spojit psy hráčů",
+    "type": "partial"
+   },
+   {
+    "t": 6900,
+    "words": [
+     [
+      "spojit",
+      0.508071
+     ],
+     [
+      "psy",
+      0.964088
+     ],
+     [
+      "hráčů",
+      0.919829
+     ],
+     [
+      "ďas",
+      0.569656
+     ],
+     [
+      "kováře",
+      0.981327
+     ],
+     [
+      "louč",
+      0.383377
+     ]
+    ],
+    "raw": "spojit psy hráčů ďas kováře louč",
+    "accepted": "spojit psy hráčů ďas kováře louč",
+    "type": "final"
+   },
+   {
+    "t": 7600,
+    "raw": "játra",
+    "accepted": "",
+    "type": "partial"
+   },
+   {
+    "t": 7800,
+    "raw": "daman",
+    "accepted": "",
+    "type": "partial"
+   },
+   {
+    "t": 8100,
+    "raw": "daman hlasu",
+    "accepted": "daman",
+    "type": "partial"
+   },
+   {
+    "t": 8800,
+    "words": [
+     [
+      "daman",
+      1
+     ],
+     [
+      "hlasu",
+      1
+     ]
+    ],
+    "raw": "daman hlasu",
+    "accepted": "daman hlasu",
+    "type": "final"
+   },
+   {
+    "t": 9300,
+    "raw": "vydala",
+    "accepted": "",
+    "type": "partial"
+   },
+   {
+    "t": 9500,
+    "raw": "vejde je",
+    "accepted": "",
+    "type": "partial"
+   },
+   {
+    "t": 9800,
+    "raw": "vejde je mužem",
+    "accepted": "vejde je",
+    "type": "partial"
+   },
+   {
+    "t": 10000,
+    "raw": "vejde je mějme",
+    "accepted": "vejde je",
+    "type": "partial"
+   },
+   {
+    "t": 10200,
+    "raw": "vejde je medmed",
+    "accepted": "vejde je",
+    "type": "partial"
+   },
+   {
+    "t": 10500,
+    "raw": "vejde je medmed vejde",
+    "accepted": "vejde je medmed",
+    "type": "partial"
+   },
+   {
+    "t": 11000,
+    "words": [
+     [
+      "vejde",
+      0.864584
+     ],
+     [
+      "je",
+      1
+     ],
+     [
+      "medmed",
+      1
+     ],
+     [
+      "vejde",
+      1
+     ]
+    ],
+    "raw": "vejde je medmed vejde",
+    "accepted": "vejde je medmed vejde",
+    "type": "final"
+   },
+   {
+    "t": 11400,
+    "raw": "játra",
+    "accepted": "",
+    "type": "partial"
+   },
+   {
+    "t": 12200,
+    "raw": "játra proved",
+    "accepted": "játra",
+    "type": "partial"
+   },
+   {
+    "t": 12349,
+    "raw": "játra pánevní",
+    "accepted": "játra pánevní",
+    "type": "final"
+   }
+  ],
+  "levels": [
+   [
+    100,
+    1604
+   ],
+   [
+    200,
+    7101
+   ],
+   [
+    300,
+    2347
+   ],
+   [
+    400,
+    1448
+   ],
+   [
+    500,
+    136
+   ],
+   [
+    600,
+    56
+   ],
+   [
+    700,
+    78
+   ],
+   [
+    800,
+    1026
+   ],
+   [
+    900,
+    7009
+   ],
+   [
+    1000,
+    4337
+   ],
+   [
+    1100,
+    634
+   ],
+   [
+    1200,
+    430
+   ],
+   [
+    1300,
+    3912
+   ],
+   [
+    1400,
+    1140
+   ],
+   [
+    1500,
+    5463
+   ],
+   [
+    1600,
+    118
+   ],
+   [
+    1700,
+    355
+   ],
+   [
+    1800,
+    169
+   ],
+   [
+    1900,
+    48
+   ],
+   [
+    2000,
+    48
+   ],
+   [
+    2100,
+    46
+   ],
+   [
+    2200,
+    49
+   ],
+   [
+    2300,
+    48
+   ],
+   [
+    2400,
+    49
+   ],
+   [
+    2500,
+    569
+   ],
+   [
+    2600,
+    4391
+   ],
+   [
+    2700,
+    3660
+   ],
+   [
+    2800,
+    3248
+   ],
+   [
+    2900,
+    4437
+   ],
+   [
+    3000,
+    682
+   ],
+   [
+    3100,
+    4463
+   ],
+   [
+    3200,
+    3096
+   ],
+   [
+    3300,
+    303
+   ],
+   [
+    3400,
+    722
+   ],
+   [
+    3500,
+    364
+   ],
+   [
+    3600,
+    49
+   ],
+   [
+    3700,
+    48
+   ],
+   [
+    3800,
+    50
+   ],
+   [
+    3900,
+    48
+   ],
+   [
+    4000,
+    48
+   ],
+   [
+    4100,
+    48
+   ],
+   [
+    4200,
+    48
+   ],
+   [
+    4300,
+    2929
+   ],
+   [
+    4400,
+    3031
+   ],
+   [
+    4500,
+    480
+   ],
+   [
+    4600,
+    1281
+   ],
+   [
+    4700,
+    2784
+   ],
+   [
+    4800,
+    2531
+   ],
+   [
+    4900,
+    6596
+   ],
+   [
+    5000,
+    3914
+   ],
+   [
+    5100,
+    412
+   ],
+   [
+    5200,
+    3586
+   ],
+   [
+    5300,
+    2537
+   ],
+   [
+    5400,
+    1058
+   ],
+   [
+    5500,
+    1709
+   ],
+   [
+    5600,
+    3817
+   ],
+   [
+    5700,
+    6512
+   ],
+   [
+    5800,
+    2252
+   ],
+   [
+    5900,
+    5034
+   ],
+   [
+    6000,
+    940
+   ],
+   [
+    6100,
+    498
+   ],
+   [
+    6200,
+    266
+   ],
+   [
+    6300,
+    186
+   ],
+   [
+    6400,
+    51
+   ],
+   [
+    6500,
+    47
+   ],
+   [
+    6600,
+    48
+   ],
+   [
+    6700,
+    47
+   ],
+   [
+    6800,
+    48
+   ],
+   [
+    6900,
+    49
+   ],
+   [
+    7000,
+    48
+   ],
+   [
+    7100,
+    1724
+   ],
+   [
+    7200,
+    7999
+   ],
+   [
+    7300,
+    5694
+   ],
+   [
+    7400,
+    2204
+   ],
+   [
+    7500,
+    3949
+   ],
+   [
+    7600,
+    3711
+   ],
+   [
+    7700,
+    2226
+   ],
+   [
+    7800,
+    1382
+   ],
+   [
+    7900,
+    1565
+   ],
+   [
+    8000,
+    164
+   ],
+   [
+    8100,
+    65
+   ],
+   [
+    8200,
+    63
+   ],
+   [
+    8300,
+    49
+   ],
+   [
+    8400,
+    47
+   ],
+   [
+    8500,
+    48
+   ],
+   [
+    8600,
+    47
+   ],
+   [
+    8700,
+    50
+   ],
+   [
+    8800,
+    47
+   ],
+   [
+    8900,
+    334
+   ],
+   [
+    9000,
+    1108
+   ],
+   [
+    9100,
+    6047
+   ],
+   [
+    9200,
+    6123
+   ],
+   [
+    9300,
+    3363
+   ],
+   [
+    9400,
+    3436
+   ],
+   [
+    9500,
+    3548
+   ],
+   [
+    9600,
+    3138
+   ],
+   [
+    9700,
+    5834
+   ],
+   [
+    9800,
+    1059
+   ],
+   [
+    9900,
+    1029
+   ],
+   [
+    10000,
+    656
+   ],
+   [
+    10100,
+    1728
+   ],
+   [
+    10200,
+    163
+   ],
+   [
+    10300,
+    77
+   ],
+   [
+    10400,
+    70
+   ],
+   [
+    10500,
+    49
+   ],
+   [
+    10600,
+    49
+   ],
+   [
+    10700,
+    47
+   ],
+   [
+    10800,
+    49
+   ],
+   [
+    10900,
+    49
+   ],
+   [
+    11000,
+    48
+   ],
+   [
+    11100,
+    643
+   ],
+   [
+    11200,
+    5819
+   ],
+   [
+    11300,
+    8080
+   ],
+   [
+    11400,
+    5026
+   ],
+   [
+    11500,
+    1040
+   ],
+   [
+    11600,
+    4641
+   ],
+   [
+    11700,
+    1610
+   ],
+   [
+    11800,
+    1424
+   ],
+   [
+    11900,
+    1565
+   ],
+   [
+    12000,
+    587
+   ],
+   [
+    12100,
+    310
+   ],
+   [
+    12200,
+    419
+   ],
+   [
+    12300,
+    241
+   ],
+   [
+    12349,
+    200
+   ]
+  ]
+ }],
+ "engine": "BENCH",
+ "format": "proto-a-session/2"
+}
