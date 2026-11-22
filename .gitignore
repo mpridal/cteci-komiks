@@ -4,8 +4,8 @@ studio/photos/
 # Výstup balíčků (jde do GitHub Releases)
 dist/
 
-# Surové tréninkové exporty z tabletu (do repa jde jen history.json)
-studio/practice/inbox/
+# Tréninkové záznamy z tabletu – repo je veřejné, zůstávají jen lokálně
+studio/practice/
 
 # Lokální zálohy před úpravami
 _zaloha/

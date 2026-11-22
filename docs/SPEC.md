@@ -33,7 +33,7 @@ Rodič: fotky a klíčová slova
 └─────────────────────────────────────────────────────────────────┘
    │  /publikuj: validace a zip balíček
    ▼
-┌─ GitHub: soukromé repo, Releases ───────────────────────────────┐
+┌─ GitHub: veřejné repo, Releases ────────────────────────────────┐
 │  Balíčky kapitol     Katalog                APK Čtečky          │
 │  (chapter.json,      (seznam kapitol        (aktualizace        │
 │   SVG vrstvy, OGG)    a SHA-256)             aplikace)          │
@@ -73,7 +73,7 @@ cteci-komiks/
       library/               efekty a hudba (OGG)
       catalog.json           popisky, tagy, licence, zdroj
     chapters/<serie>/<NN>/   zdrojová kapitola: scene.json + chapter.json
-    practice/                tréninkové záznamy z tabletu (inbox/ = nové exporty, history.json = souhrn)
+    practice/                v .gitignore: tréninkové záznamy z tabletu (inbox/ = nové exporty, history.json = souhrn)
     photos/                  v .gitignore, nikdy necommitovat
     tools/                   skripty: validace, kontrola textu, skládání panelů, náhledy PNG, balíčky
   app/                       Android Čtečka
@@ -315,12 +315,12 @@ Fotky ani hlas dítěte neopouštějí rodinná zařízení, kromě jednorázov�
 
 - **Fotky:** jen v `studio/photos/` (v `.gitignore`). Do repa se dostanou jen kreslené díly postavy.
 - **Hlas:** zpracování jen v tabletu, nic se neukládá. Statistiky obsahují jen počty, ne zvuk ani přepis.
-- **Tréninkový záznam:** jen slova z textu kapitoly, výsledek a doby čtení. Opouští tablet jen ručním sdílením rodiče. Surové exporty v `studio/practice/inbox/` jsou v `.gitignore`, do repa jde jen souhrn `history.json`.
-- **Repo:** soukromé. Čtečka stahuje Releases s fine-grained GitHub tokenem jen pro čtení obsahu tohoto jednoho repa. Token není v kódu: rodič ho zadá jednou v rodičovské sekci (nebo načte QR kódem) a uloží se šifrovaně přes Android Keystore.
+- **Tréninkový záznam:** jen slova z textu kapitoly, výsledek a doby čtení. Opouští tablet jen ručním sdílením rodiče. Repo je veřejné, proto je celá složka `studio/practice/` v `.gitignore` (zůstává jen v PC a v OneDrive). Do repa se dostane jen `practice.focus` v profilu, tedy seznam slov k procvičení bez výsledků.
+- **Repo:** veřejné (`mpridal/cteci-komiks`, rozhodnuto 22. 11. 2026). Čtečka stahuje katalog a balíčky z veřejných Releases bez tokenu. Veřejné jsou proto i kapitoly, jméno Viky a kreslená postava. Fotky, tréninkové záznamy a cokoli dalšího o dítěti zůstávají jen lokálně (v `.gitignore`).
 - **Síť:** Čtečka komunikuje jen s GitHubem. Žádné reklamy, analytika ani AI služby.
 - **AI:** generuje jen rodič v interaktivní relaci Claude Code. Aplikace se k předplatnému nepřihlašuje.
 - **Balíčky:** Čtečka před rozbalením ověří SHA-256 z katalogu a odmítne cesty mimo cílovou složku (ochrana proti zip slip). SVG s odkazy, skripty nebo externími zdroji nevykreslí.
-- **Rodičovský zámek:** nastavení, stažení a token jsou za jednoduchým zámkem.
+- **Rodičovský zámek:** nastavení, stažení a export záznamu jsou za jednoduchým zámkem.
 
 ## Fáze vývoje
 
@@ -371,7 +371,7 @@ Tyto body rozhodne rodič. Claude Code se na ně zeptá, než dojde k části, k
 - [ ] Jakým písmem čtou ve škole? Zatím předpokládám velká tiskací (`UPPER`).
 - [ ] Psací písmo: který font odpovídá školnímu (Comenia Script, nebo klasické psací) a má licenci použitelnou v aplikaci?
 - [x] Jméno hlavní postavy v příběhu: Viky (VI-KY).
-- [ ] Repo soukromé s tokenem (doporučeno), nebo veřejné repo jen s balíčky bez jmen?
+- [x] Repo soukromé s tokenem, nebo veřejné? Veřejné, bez tokenu: `github.com/mpridal/cteci-komiks`.
 - [ ] Jaký stack mají Deskovky a ThermoCamera a dá se z nich převzít modul pro aktualizace z GitHubu?
 - [ ] Kolik kapitol týdně? Podle toho velikost startovní knihovny zvuků.
 - [ ] Má Studio běžet jen na PC, nebo i z Claude Code na webu nebo v mobilu nad stejným repem? (fotky by pak musely do relace jinou cestou)
