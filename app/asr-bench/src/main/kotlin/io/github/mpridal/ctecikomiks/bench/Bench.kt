@@ -4,6 +4,7 @@ import io.github.mpridal.ctecikomiks.core.FilterConfig
 import io.github.mpridal.ctecikomiks.core.HypothesisFilter
 import io.github.mpridal.ctecikomiks.core.ReadWord
 import io.github.mpridal.ctecikomiks.core.ReadingTracker
+import io.github.mpridal.ctecikomiks.core.TextNorm
 import io.github.mpridal.ctecikomiks.core.TrackEvent
 import io.github.mpridal.ctecikomiks.core.WordStatus
 import io.github.mpridal.ctecikomiks.core.grammarFor
@@ -36,6 +37,9 @@ fun main(args: Array<String>) {
         "vypnuto" to FilterConfig(minSnrDb = 0.0, stableMs = 0, minConf = 0.0),
         "hlas+stabilita" to FilterConfig(minSnrDb = 12.0, stableMs = 200, minConf = 0.0),
         "hlas+stab+jistota" to FilterConfig(minSnrDb = 12.0, stableMs = 200, minConf = 0.7),
+        "hlas+stab100" to FilterConfig(minSnrDb = 12.0, stableMs = 100, minConf = 0.0),
+        "hlas+stab150" to FilterConfig(minSnrDb = 12.0, stableMs = 150, minConf = 0.0),
+        "hlas+stab300" to FilterConfig(minSnrDb = 12.0, stableMs = 300, minConf = 0.0),
     )
     // slovník modelu pro rušivá slova (gramatika stránky + distraktory)
     val vocabFile = System.getenv("VOSK_VOCAB")?.let(::File)
@@ -55,7 +59,9 @@ fun main(args: Array<String>) {
     for ((g, gf) in grammars) for ((f, fc) in filters) configs["$g / $f"] = gf to fc
     // výběr konfigurací: čárkami oddělené části názvu, mezera se píše jako _
     val selected = if (args.size >= 4) {
-        configs.filterKeys { k -> args[3].split(',').any { k == it.replace('_', ' ') } }
+        // bez diakritiky: Windows při předání argumentů poškodí znaky mimo cp1252 (ě)
+        fun plain(s: String) = TextNorm.key(s.replace('_', ' ').replace("/", " slash ").replace("+", " plus "))
+        configs.filterKeys { k -> args[3].split(',').any { plain(k) == plain(it) } }
     } else configs
 
     val out = JSONObject()
@@ -178,8 +184,8 @@ private fun summarize(results: List<ScenarioResult>): JSONObject {
         val total = rs.sumOf { it.total }
         val lat = rs.flatMap { it.latencies }.sorted()
         o.put(kind, JSONObject().apply {
-            when (kind) {
-                "read", "syllables", "read_babble" -> {
+            when {
+                kind in setOf("read", "syllables", "read_babble", "child_read", "child_syllables") -> {
                     put("auto", "%.0f %%".format(100.0 * rs.sumOf { it.autoRead } / total))
                     if (lat.isNotEmpty()) {
                         put("latMedianMs", lat[lat.size / 2])
@@ -188,11 +194,11 @@ private fun summarize(results: List<ScenarioResult>): JSONObject {
                     put("early", rs.sumOf { it.early })
                     put("rewards", rs.sumOf { it.rewards })
                 }
-                "misread" -> {
+                kind.endsWith("misread") -> {
                     put("falseRewards", rs.sumOf { it.rewards })
                     put("auto", "%.0f %%".format(100.0 * rs.sumOf { it.autoRead } / total))
                 }
-                else -> put("falseAdvancedWords", rs.sumOf { it.advanced }).put("of", total)
+                else -> { put("falseAdvancedWords", rs.sumOf { it.advanced }); put("of", total) }
             }
         })
     }

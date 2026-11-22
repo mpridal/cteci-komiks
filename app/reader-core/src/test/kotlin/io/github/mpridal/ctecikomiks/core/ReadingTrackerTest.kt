@@ -78,6 +78,27 @@ class ReadingTrackerTest {
         assertEquals(WordStatus.READ, t.status[0])
     }
 
+    @Test fun piecesFromFreeRecognitionAreJoined() {
+        // volné rozpoznávání vrátí slabiky jako slova, která nejsou ve slabikách stránky (např. "kro" chybí ve slovníku)
+        val t = ReadingTracker(listOf(w("TO"), w("KOČKU.", "KO", "ČKU", practice = true)))
+        t.feed("to")
+        val ev1 = t.feed("koč")  // jiné dělení než KO-ČKU
+        assertTrue(ev1.isEmpty())
+        val ev2 = t.feed("ku")
+        val read = ev2.filterIsInstance<TrackEvent.WordRead>().single()
+        assertEquals(MatchKind.SYLLABLES, read.kind)
+        assertTrue("přesně slepené slovo dává hvězdičku", read.reward)
+    }
+
+    @Test fun longTokenResetsPieces() {
+        val t = ReadingTracker(listOf(w("TO"), w("MÁMA", "MÁ", "MA")))
+        t.feed("to")
+        t.feed("m")
+        t.feed("krokodýl") // dlouhé cizí slovo přeruší skládání
+        t.feed("áma")
+        assertEquals(1, t.cursor)
+    }
+
     @Test fun skippedWordsInWindowCountAsRead() {
         val t = ReadingTracker(page())
         val ev = t.onFinal("je")
@@ -98,16 +119,17 @@ class ReadingTrackerTest {
         assertTrue(t.isDone)
     }
 
-    @Test fun practiceWordNeedsStricterMatchAndGivesReward() {
-        val sloppy = ReadingTracker(listOf(w("STŘÍKÁ", practice = true)))
-        sloppy.feed("stříhá") // 1/6 = 0,17 → ještě projde přísným prahem 0,2
-        assertTrue(sloppy.isDone)
-        val wrong = ReadingTracker(listOf(w("STŘÍKÁ", practice = true)))
-        wrong.feed("strýna") // 2/6 = 0,33 → běžný práh 0,34 by prošel, přísný ne
-        assertFalse(wrong.isDone)
-        val easy = ReadingTracker(listOf(w("STŘÍKÁ")))
-        easy.feed("strýna")
-        assertTrue(easy.isDone)
+    private fun rewardFor(token: String): Boolean? {
+        val t = ReadingTracker(listOf(w("STŘÍKÁ", practice = true)))
+        val read = t.feed(token).filterIsInstance<TrackEvent.WordRead>().singleOrNull() ?: return null
+        return read.reward
+    }
+
+    @Test fun practiceWordAdvancesTolerantlyButRewardsOnlyExact() {
+        assertEquals(true, rewardFor("stříká"))
+        assertEquals("chybné čtení (vynechané T) posune, ale bez hvězdičky", false, rewardFor("sříká"))
+        assertEquals(false, rewardFor("strýna"))   // 2/6 = 0,33 ≤ 0,34
+        assertEquals(null, rewardFor("struny"))    // 3/6 = 0,5 → neposune
 
         val t = ReadingTracker(page())
         t.onFinal("to je vika máma má")

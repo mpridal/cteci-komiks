@@ -7,7 +7,8 @@ Použití (ze složky app/):
 Čtení generuje český systémový hlas Windows (Jakub) slovo po slově s pauzami jako začínající
 čtenářka; časy konců slov jdou do manifest.json (pro přesné měření odezvy).
 Scénáře: read (čtení stránky), syllables (víceslabičná slova po slabikách), misread (těžká slova
-špatně), read_babble (čtení + anglický hovor v pozadí), silence, noise, babble_en, talk_cs.
+špatně), child_* (totéž vyšším hlasem, pomaleji, se zaváháním a „ehm“), read_babble (čtení +
+anglický hovor v pozadí), silence, noise, hum, babble_en, talk_cs.
 """
 from __future__ import annotations
 
@@ -33,9 +34,9 @@ FOREIGN_EN = ("The weather today will be mostly sunny with a light breeze from t
               "In the afternoon, clouds will gather over the hills and there may be a short shower.")
 
 
-def tts(text: str, voice: str, out: Path, rate: float = 1.0) -> list[float]:
+def tts(text: str, voice: str, out: Path, rate: float = 1.0, pitch: float = 1.0) -> list[float]:
     subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(HERE / "tts.ps1"),
-                    "-Voice", voice, "-Text", text, "-Out", str(out), "-Rate", str(rate)],
+                    "-Voice", voice, "-Text", text, "-Out", str(out), "-Rate", str(rate), "-Pitch", str(pitch)],
                    check=True, capture_output=True)
     with wave.open(str(out)) as w:
         if w.getframerate() != RATE or w.getnchannels() != 1:
@@ -97,8 +98,22 @@ def load_pages() -> list[dict]:
     return pages
 
 
-def reading(words: list[dict], tmp: Path, mode: str, cache: dict) -> tuple[list[float], list[int], list[int]]:
-    """Slovo po slově s pauzou 0,45 s. Vrátí audio, konce slov (ms) a indexy čtených slov."""
+ADULT = {"rate": 0.85, "pitch": 1.0, "pause": 0.45, "syl_pause": 0.25, "hesitate": 0.0, "filler": 0.0}
+# přiblížení dítěti: vyšší hlas, pomaleji, delší pauzy, občas zaváhá („MO… MOŘI“) nebo řekne „ehm“
+CHILD = {"rate": 0.7, "pitch": 1.6, "pause": 0.75, "syl_pause": 0.35, "hesitate": 0.3, "filler": 0.12}
+
+
+def say(text: str, voice: dict, tmp: Path, cache: dict) -> list[float]:
+    key = (text.lower(), voice["rate"], voice["pitch"])
+    if key not in cache:
+        cache[key] = trim(tts(text.lower(), "Jakub", tmp / "w.wav", voice["rate"], voice["pitch"]))
+    return cache[key]
+
+
+def reading(words: list[dict], tmp: Path, mode: str, cache: dict,
+            voice: dict = ADULT, seed: int = 1) -> tuple[list[float], list[int], list[int]]:
+    """Slovo po slově s pauzou. Vrátí audio, konce slov (ms) a indexy čtených slov."""
+    rnd = random.Random(seed)
     audio = silence(0.8)
     ends, idxs = [], []
     for i, w in enumerate(words):
@@ -107,17 +122,18 @@ def reading(words: list[dict], tmp: Path, mode: str, cache: dict) -> tuple[list[
             text = misread(w["w"])
             if text is None:
                 continue
+        if rnd.random() < voice["filler"]:
+            audio += say("ehm", voice, tmp, cache) + silence(0.4)
         parts = w["syl"] if (mode == "syllables" and len(w["syl"]) > 1) else [text]
+        if mode != "syllables" and len(w["syl"]) > 1 and rnd.random() < voice["hesitate"]:
+            audio += say(w["syl"][0], voice, tmp, cache) + silence(0.35)  # zaváhání
         for k, part in enumerate(parts):
-            key = (part.lower(), 0.85)
-            if key not in cache:
-                cache[key] = trim(tts(part.lower(), "Jakub", tmp / "w.wav", 0.85))
-            audio += cache[key]
+            audio += say(part, voice, tmp, cache)
             if k < len(parts) - 1:
-                audio += silence(0.25)
+                audio += silence(voice["syl_pause"])
         ends.append(int(len(audio) / RATE * 1000))
         idxs.append(i)
-        audio += silence(0.45)
+        audio += silence(voice["pause"] * rnd.uniform(0.7, 1.4))
     return audio + silence(1.5), ends, idxs
 
 
@@ -145,6 +161,12 @@ def main(argv=None) -> int:
             name = f"p{pi + 1}_{mode}"
             write(out / f"{name}.wav", audio)
             scenarios.append({"name": name, "kind": mode, "page": pi, "wav": f"{name}.wav",
+                              "wordEndsMs": ends, "spokenWords": idxs})
+        for mode in ("read", "syllables", "misread"):
+            audio, ends, idxs = reading(page["words"], tmp, mode, cache, CHILD, seed=pi + 11)
+            name = f"p{pi + 1}_child_{mode}"
+            write(out / f"{name}.wav", audio)
+            scenarios.append({"name": name, "kind": f"child_{mode}", "page": pi, "wav": f"{name}.wav",
                               "wordEndsMs": ends, "spokenWords": idxs})
         audio, ends, idxs = reading(page["words"], tmp, "read", cache)
         name = f"p{pi + 1}_read_babble"

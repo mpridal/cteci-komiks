@@ -258,7 +258,7 @@ Tablet ukazuje celou stránku komiksu, telefon jeden panel po druhém. Text vžd
 
 Těžká slova (pole `practice`) se cíleně trénují a za správné přečtení přijde odměna.
 
-- **Správně přečteno** = slovo rozpoznané přímo (ne přeskočené posunem kurzoru), bez nápovědy a bez tlačítka „dál“. Při čtení po slabikách musí zaznít všechny slabiky v pořadí. Pro tréninková slova platí přísnější práh shody než pro ostatní (výchozí 0,2, ladí se v prototypu A), aby fanfáry nezazněly za chybné čtení.
+- **Správně přečteno** = slovo rozpoznané přímo (ne přeskočené posunem kurzoru), bez nápovědy a bez tlačítka „dál“. Při čtení po slabikách musí zaznít všechny slabiky v pořadí. Kurzor se posouvá i při podobné shodě (práh 0,34), ale **hvězdička přijde jen za přesnou shodu** se slovem nebo jeho náhradou `asr`, aby fanfáry nezazněly za chybné čtení. Upraveno podle prototypu A 22. 11. 2026, kde přísnější práh 0,2 propouštěl chyby typu SŘÍKÁ místo STŘÍKÁ.
 - **Hvězdička:** po správně přečteném těžkém slově krátký „cink“ a hvězdička, která z místa slova odletí do počítadla v rohu stránky. Čtení se nepřerušuje, hudba se na okamžik ztlumí.
 - **Fanfáry:** na konci stránky podle počtu hvězdiček (malé / střední / velké) s krátkou animací, při všech hvězdičkách stránky navíc konfety. Na konci kapitoly souhrn hvězdiček, ty se ukazují i na obálce kapitoly v knihovně.
 - **Zvuky odměn** jsou součástí aplikace (ne balíčku kapitoly), CC0 nebo ze `sfx_synth.py`. Rodič může odměny ztlumit.

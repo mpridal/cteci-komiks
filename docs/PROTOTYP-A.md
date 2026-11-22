@@ -50,6 +50,30 @@ Ticho, šum a brum dávají ve všech režimech 0 falešných posunů. Filtr hla
 
 **Výchozí režim Čtečky: Vosk volně + filtr.** Pro srovnání naživo jde v aplikaci přepnout na „Stránka + 1000“ a „Jen stránka“. Pozor: syntetický dospělý hlas je snazší než dětský. Bránu rozhodne až čtení dcery.
 
+### Dětsky znějící hlas a ladění (druhé kolo)
+
+Korpus má navíc scénáře `child_*`:
+- hlas o 60 % výš, tempo 0,7, delší a nepravidelné pauzy,
+- ve 30 % víceslabičných slov zaváhání („MO… MOŘI“),
+- 12 % výplní „ehm“.
+
+Úpravy sledování:
+1. **Hvězdička jen za přesnou shodu.** Posun kurzoru zůstává tolerantní (0,34), ale chybné čtení (SŘÍKÁ místo STŘÍKÁ) už odměnu nedá.
+2. **Slepování kousků.** Ve volném režimu se slabiky („koč“ „ku“) skládají a porovnávají s aktuálním slovem.
+
+| Režim (filtr hlas 12 dB) | Čtení dospělý / dětský | Slabiky dospělý / dětský | Cizí hovor EN / CZ | Hvězdičky omylem dosp. / dět. | Odezva dětský medián / 90 % |
+|---|---|---|---|---|---|
+| **volně, stabilita 200 ms (výchozí)** | 87 % / **93 %** | 87 % / 72 % | 5 / 8 | 0 / 1 | **0,35 / 0,63 s** |
+| volně, stabilita 100 ms | 87 % / 93 % | 89 % / 83 % | 14 / 8 | 0 / 1 | 0,25 / 1,5 s |
+| stránka + 1000, 200 ms | 89 % / 89 % | 76 % / 76 % | 6 / 3 | 1 / 2 | 0,30 / 0,49 s |
+
+Poznámky:
+- Stabilita 150 ms dává totéž co 200 ms, protože zvuk chodí po 100 ms.
+- Ve volném režimu vychází dětské čtení celými slovy na 93 % a odezva je pod 1 s i u 90 % slov.
+- **Slabou stránkou je dětské čtení po slabikách (72 %):** ve volném režimu Vosk slabiky často převede na úplně jiná slova.
+  - Když bude Viky v testu slabikovat a nepůjde to, zkuste přepnout na „Stránka + 1000“ (76 %).
+  - Další možnost: slabiky přidat do gramatiky jako vlastní slova. Model ale většinu z nich nezná (21 z 38).
+
 Spuštění lavice (ze složky `app/`, cesty bez mezer):
 ```
 python -I asr-bench/scripts/make_corpus.py --out %LOCALAPPDATA%/cteci-komiks-build/asr-corpus

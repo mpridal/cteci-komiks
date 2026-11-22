@@ -6,8 +6,11 @@ data class TrackerConfig(
     val shortWordMaxLength: Int = 3,
     /** Max. normalizovaná Levenshteinova vzdálenost pro delší slova. */
     val maxDistance: Double = 0.34,
-    /** Přísnější práh pro tréninková slova (aby fanfáry nezněly za chybné čtení). */
-    val practiceMaxDistance: Double = 0.2,
+    /**
+     * Hvězdička za těžké slovo jen při přesné shodě (asr-bench: tolerantní shoda dávala
+     * odměnu i za chybné čtení, např. SŘÍKÁ místo STŘÍKÁ). Posun kurzoru zůstává tolerantní.
+     */
+    val rewardRequiresExact: Boolean = true,
     /** Okno za kurzorem, ve kterém se hledá shoda (kurzor + window). */
     val window: Int = 3,
     /** Přijmout [unk] jako přečtení slova, které slovník rozpoznávače nezná. */
@@ -94,14 +97,32 @@ class ReadingTracker(val words: List<ReadWord>, private val config: TrackerConfi
         for (j in cursor + 1..last) {
             matchWord(j, t)?.let { return read(j, it) }
         }
+
+        // 4) kousky slova po sobě (čtení po slabikách ve volném rozpoznávání: "ko" "čku" → KOČKU)
+        if (t.length <= MAX_PIECE) {
+            recentPieces += t
+            while (recentPieces.size > MAX_PIECES) recentPieces.removeAt(0)
+            for (n in 2..recentPieces.size) {
+                val joined = recentPieces.takeLast(n).joinToString("")
+                matchWord(cursor, joined)?.let { return read(cursor, Match(MatchKind.SYLLABLES, it.exact)) }
+            }
+        } else {
+            recentPieces.clear()
+        }
         return emptyList()
     }
 
-    private fun matchWord(index: Int, t: String): MatchKind? {
+    private data class Match(val kind: MatchKind, val exact: Boolean)
+
+    private val recentPieces = mutableListOf<String>()
+
+    /** Shoda pro posun (tolerantní); [Match.exact] = přesná shoda, jen ta dává odměnu. */
+    private fun matchWord(index: Int, t: String): Match? {
         val w = words[index]
-        val threshold = if (w.isPractice) config.practiceMaxDistance else config.maxDistance
-        if (matches(TextNorm.key(w.text), t, threshold)) return MatchKind.WORD
-        if (w.asr.any { proxy -> matches(TextNorm.key(proxy), t, threshold) }) return MatchKind.PROXY
+        val key = TextNorm.key(w.text)
+        if (matches(key, t, config.maxDistance)) return Match(MatchKind.WORD, key == t)
+        w.asr.map { TextNorm.key(it) }.firstOrNull { matches(it, t, config.maxDistance) }
+            ?.let { return Match(MatchKind.PROXY, it == t) }
         return null
     }
 
@@ -112,7 +133,9 @@ class ReadingTracker(val words: List<ReadWord>, private val config: TrackerConfi
             normalizedDistance(expected, token) <= threshold
         }
 
-    private fun read(index: Int, kind: MatchKind): List<TrackEvent> {
+    private fun read(index: Int, kind: MatchKind): List<TrackEvent> = read(index, Match(kind, kind == MatchKind.SYLLABLES))
+
+    private fun read(index: Int, match: Match): List<TrackEvent> {
         val events = mutableListOf<TrackEvent>()
         val direct = index == cursor
         for (k in cursor until index) {
@@ -120,8 +143,10 @@ class ReadingTracker(val words: List<ReadWord>, private val config: TrackerConfi
             events += TrackEvent.Skipped(k)
         }
         status[index] = WordStatus.READ
-        val reward = direct && words[index].isPractice && kind != MatchKind.UNK
-        events += TrackEvent.WordRead(index, kind, direct, reward)
+        // hvězdička jen za přímé a přesné přečtení těžkého slova (ne přeskočením, ne [unk], ne podobně)
+        val reward = direct && words[index].isPractice && match.kind != MatchKind.UNK &&
+            (match.exact || !config.rewardRequiresExact)
+        events += TrackEvent.WordRead(index, match.kind, direct, reward)
         advanceTo(index + 1)
         if (isDone) events += TrackEvent.PageDone
         return events
@@ -138,6 +163,14 @@ class ReadingTracker(val words: List<ReadWord>, private val config: TrackerConfi
     private fun advanceTo(index: Int) {
         cursor = index
         syllableProgress = 0
+        recentPieces.clear()
+    }
+
+    private companion object {
+        /** Kousek slova (slabika) má nejvýš tolik písmen. */
+        const val MAX_PIECE = 4
+        /** Kolik posledních kousků se zkouší slepit. */
+        const val MAX_PIECES = 4
     }
 
     /** Statistika stránky pro bránu prototypu A. */
